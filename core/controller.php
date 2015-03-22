@@ -15,6 +15,7 @@
 
 		public function render($view){
 			
+			
 			if($this->rendered) return false;
 
 			extract($this->vars);

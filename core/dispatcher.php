@@ -14,7 +14,7 @@ class Dispatcher{
 		if(!in_array($this->request->action, get_class_methods($controller))){
 			$this->error('Controller missing function "'.$this->request->action.'"');
 		}
-
+		
 		call_user_func_array(array($controller, $this->request->action), $this->request->params);
 		
 		$controller->render($this->request->action);

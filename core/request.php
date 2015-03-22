@@ -6,7 +6,13 @@ class Request{
 
 	function __construct(){
 
-		$this->url = $_SERVER['PATH_INFO'];
+		if(isset($_SERVER['PATH_INFO'])){
+			$this->url = $_SERVER['PATH_INFO'];
+		}
+		else{
+			$this->url = '/pages';
+		}
+
 	
 	}
 
