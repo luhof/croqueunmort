@@ -7,6 +7,7 @@
 
 	<body>
 		<div id="menu">
+			<h1>Croque Un Mort</h1>
 			menu
 		</div>
 

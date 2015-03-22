@@ -13,7 +13,9 @@
 		}
 
 
+		//renders a view where $view -> file to render
 		public function render($view){
+			
 			
 			if($this->rendered) return false;
 
@@ -35,6 +37,7 @@
 			$this->rendered = true;
 		}
 
+		//passe des variables à la vue
 		public function set($key, $value=null){
 			if(is_array($key)){
 				$this->vars += $key;
@@ -44,6 +47,22 @@
 			}
 		}
 
+
+		function loadModel($name){
+			$file = ROOT.DS.'Model'.DS.$name.'.php';
+			require_once($file);
+			if(!isset($this->$name)){
+				$this->$name = new $name();
+			}
+			
+		}
+
+		function e404($msg){
+			$this->set('msg', $msg);
+			$this->render('/errors/404');
+
+			die();
+		}
 
 
 	}
