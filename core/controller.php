@@ -8,8 +8,12 @@
 		private $rendered 	= false;
 
 
-		function __construct($request){
-			$this->request = $request;
+		function __construct($request = null){
+			if($request){
+				$this->request = $request;				
+			}
+
+
 		}
 
 
@@ -63,6 +67,16 @@
 
 			die();
 		}
+
+		//appeler un controlleur depuis une vue
+		function request($controller, $action){
+			$controller .= 'Controller';
+			require_once ROOT.DS.'controller'.DS.$controller.'.php';
+			$c = new $controller();
+			return $c->$action();
+
+		}
+
 
 
 	}

@@ -3,16 +3,28 @@
 	<head>
 		<meta charset="UTF-8"/>
 		<title>Croque Un Mort</title>
+		<link rel="stylesheet" href="/croqueunmort/webroot/css/style.css"/>
 	</head>
 
 	<body>
-		<div id="menu">
+		<header>
 			<h1>Croque Un Mort</h1>
-			menu
-		</div>
+			<a href="/croqueunmort/pages/">Index</a>
 
-		<div id="container">
+		</header>
+
+
+		<div id="wrapper">
 			<?php echo $contentLayout ?>
+
+			<h2> every user </h2>
+			<?php
+				$users = $this->request('Pages', 'getUsers');
+				foreach($users as $user){
+					echo('<a href=/croqueunmort/pages/view/'.$user->idUser.'>'.$user->username.'</a><br/>');
+				}
+			?>
+
 		</div>
 
 	</body>

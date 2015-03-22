@@ -10,10 +10,15 @@ class Model{
 
 	public function __construct(){
 
+		if($this->table === false){
+			$this->table = 'ce_'.strtolower(get_class($this));
+		}
+
+		//database connexion
 		$conf = Conf::$dataBases[$this->conf];
 
 		if(isset(Model::$connections[$this->conf])){
-			$this->db = Model::$conecctions[$this->conf];
+			$this->db = Model::$connections[$this->conf];
 			return true;
 		}
 
@@ -37,9 +42,7 @@ class Model{
 			}
 		}
 		
-		if($this->table === false){
-			$this->table = 'ce_'.strtolower(get_class($this));
-		}
+		
 
 	}
 

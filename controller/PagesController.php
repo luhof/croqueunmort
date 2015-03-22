@@ -25,12 +25,11 @@
 			$this->set('users', $users);
 		}
 
-		function index(){
-			$this->render('index');
-		}
 
-		function top(){
-			$this->render('top');
+		//creates menu with all users
+		function getUsers(){
+			$this->loadModel('User');
+			return $this->User->find(array());
 		}
 
 
