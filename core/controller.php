@@ -24,10 +24,12 @@
 			if($this->rendered) return false;
 
 			extract($this->vars);
-
 			//check if starts with '/' (error)
 			if(strpos($view, '/')===0){
 				$view = ROOT.DS.'view'.$view.'.php';
+			}
+			else if($view == 'index'){
+				$view = ROOT.DS.'view'.DS.$view.'.php';
 			}
 			else{
 				$view = ROOT.DS.'view'.DS.$this->request->controller.DS.$view.'.php';

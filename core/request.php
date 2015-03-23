@@ -10,7 +10,7 @@ class Request{
 			$this->url = $_SERVER['PATH_INFO'];
 		}
 		else{
-			$this->url = '/pages';
+			$this->url = '/index';
 		}
 
 	

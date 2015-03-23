@@ -12,6 +12,10 @@
 			$this->render('index');
 		}*/
 
+		function login(){
+			
+		}
+
 
 		//see 1 user with ID
 		function view($id){
@@ -30,6 +34,15 @@
 		function getUsers(){
 			$this->loadModel('User');
 			return $this->User->find(array());
+		}
+
+		function top(){
+			//$this->loadModel('Corpse');
+			$this->set('array_of_best', 'array of best');
+		}
+
+		function last(){
+
 		}
 
 
