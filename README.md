@@ -12,6 +12,7 @@ interact w/ bdd <br/>
 "secure-ish" sign-in/sign-up<br/>
 fill database
 manually create a few strips
-continue strips
+continue strips<br/>
 
+die from exhaustion
 </p>
