@@ -5,7 +5,7 @@ class Router{
 	//parse $url and return an array
 	static function parse($url, $request){
 		$url = trim($url, '/');
-		$params = explode('/', $url);
+		$params = explode('-', $url);
 
 
 		$request->controller = $params[0];
