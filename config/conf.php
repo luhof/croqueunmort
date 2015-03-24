@@ -2,14 +2,14 @@
 
 class Conf{
 
-	static $debug = 1;
+	static $debug = 2;
 	
 	static $dataBases = array(
 
 	'default'	=>	array(
 					'host'		=> 'localhost',
 					'database'	=> 'cadavre',
-					'login'		=> 'root',
+					'login'		=> 'lolilol',
 					'password'	=> '',
 					),
 

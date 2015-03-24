@@ -16,7 +16,7 @@
 
 
 <h1>Inscription</h1>
-	<form action="login" method="POST">
+	<form action="user-register" method="POST">
 
 	<?php
 
