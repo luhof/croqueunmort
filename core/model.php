@@ -6,12 +6,13 @@ class Model{
 
 	public $conf = 'default';
 	public $table = false;
+	public $table2 = false;
 	public $db;
 
 	public function __construct(){
 
 		if($this->table === false){
-			$this->table = 'ce_'.strtolower(get_class($this));
+			$this->table = "ce_".strtolower(get_class($this));
 		}
 
 		//database connexion
@@ -44,6 +45,10 @@ class Model{
 		
 		
 
+	}
+
+	public function createSecondTable($name){
+		$this->table2 = "ce_".strtolower($name);
 	}
 
 	public function find($req){

@@ -15,6 +15,8 @@
 				$this->e404('User introuvable');
 			}
 			$this->set('users', $users);
+
+		
 		}
 
 
