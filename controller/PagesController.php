@@ -2,17 +2,40 @@
 
 	class PagesController extends Controller{
 
-		/*function view($name){
-			$this->set(array(
-				"phrase"	=> "salut",
-				"nom"		=> "machin"	 	
-
-			));
-			
-			$this->render('index');
-		}*/
 
 		function login(){
+			
+			if(isset($_POST['type'])&&!empty($_POST['type'])){
+				$type = $_POST['type'];
+				if($type=="login"){
+					echo "asked for login";
+				}
+				else if($type=="register"){
+					echo "asked for registration";
+				}
+				else{
+					echo "wtf did you asked ?";
+				}
+			}
+			
+			//redirects if already logged
+			//if($_SESSION['MACHIN']){}
+		}
+
+
+		//if $type==1 prints login form
+		//if $type==2 prints register form
+		function setForm($type){
+			$params = array(
+				array("name" => "login",	"type"	=> "text"),
+				array("name" => "password",	"type"	=> "password"),
+				array("name" => "e-mail",	"type"	=> "email"),
+				array("name" => "type",		"type"	=>"hidden",	"value" =>	$type),
+				array("name" =>	"", 		"type"	=> "submit")
+			);
+
+			$this->set('form', $params);
+			
 			
 		}
 
