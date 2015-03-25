@@ -32,7 +32,7 @@
 <body>
 
 	<header>
-		<a class="btn" href="/croqueunmort/user-login">S'inscrire/Se connecter</a>
+		<a class="btn" href="/croqueunmort/user-login"><i class="fa fa-sign-in"></i> S'inscrire/Se connecter</a>
 		<hr />
 		<h1>
 			<span class="title1">Croque un mort</span><br />Cuisinez vos cadavres exquis
@@ -103,14 +103,13 @@
 
 	<?php echo $contentLayout ?>
 
-			<!--<h2> every user </h2>
-			<?php
-				$users = $this->request('Pages', 'getUsers');
-				foreach($users as $user){
-					echo('<a href=/croqueunmort/pages/view/'.$user->idUser.'>'.$user->username.'</a><br/>');
-				}
-			?>-->
-
+      <!--<h2> every user </h2>
+      <?php
+        //$users = $this->request('Pages', 'getUsers');
+        //foreach($users as $user){
+        //  echo('<a href=/croqueunmort/pages/view/'.$user->idUser.'>'.$user->username.'</a><br/>');
+        //}
+      ?>-->
 
 	<footer>
 		<p>© <?php echo date('Y');?> <a href="#">Croque un mort</a>, cuisinez vos cadavres exquis | <a href="#" title="Mentions légales">Mentions légales</a> | <a href="#" title="Contact">Contact</a></p>

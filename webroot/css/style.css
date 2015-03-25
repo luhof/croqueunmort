@@ -85,7 +85,13 @@ h1 {
 
 /* Structure */
 .rows {
-	margin: 3% -3% 0 -3%;
+	margin: 0 -3% 0 -3%;
+}
+.row-2 {
+	display: inline-block;
+	margin: 0 3%;
+	vertical-align: top;
+	width: 43%;
 }
 .row-3 {
 	display: inline-block;
@@ -166,7 +172,7 @@ td {
 
 
 /* Formulaires */
-input[type="text"], textarea {
+input[type="text"], input[type="password"], input[type="email"], textarea {
 	background-color: #E9E7E7;
 	border: 3px #E9E7E7 solid;
 	color: #1D0F06;
@@ -174,7 +180,7 @@ input[type="text"], textarea {
 	font-size: 100%;
 	padding: 1%;
 	margin: 1% 0;
-	width: 96%;
+	width: 100%;
 	transition: all 0.3s ease-out 0s;
 }
 textarea {
@@ -190,12 +196,11 @@ input[type="submit"], input[type="button"] {
 	font-family: FuturaHand, 'Comic Sans MS', cursive, sans-serif;
 	color: #FFFFFF;
 	display: inline-block;
-	padding: 5px 10px;
-	margin-top: 25px;
+	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
-	font-size: 1.2em;
-	padding: 15px 30px;
+	font-size: 110%;
+	font-weight: bold;
 	transition: all 0.5s ease-out 0s;
 }
 input[type="submit"]:hover {
@@ -231,4 +236,7 @@ hr {
 	height: 0;
 	margin: 0;
 	visibility: hidden;
+}
+.fa-5x {
+	margin-top: 6%;
 }

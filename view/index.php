@@ -51,7 +51,7 @@
     </article>
   </section>
 	
-    <section>
+  <section>
     <h2 class="title1"><i class="fa fa-gamepad"></i> Comment jouer</h2>
     <article>
 
