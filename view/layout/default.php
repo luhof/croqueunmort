@@ -20,15 +20,6 @@
 
 		<div id="wrapper">
 			<?php echo $contentLayout ?>
-
-			<!--<h2> every user </h2>
-			<?php
-				$users = $this->request('Pages', 'getUsers');
-				foreach($users as $user){
-					echo('<a href=/croqueunmort/pages/view/'.$user->idUser.'>'.$user->username.'</a><br/>');
-				}
-			?>-->
-
 		</div>
 
 	</body>

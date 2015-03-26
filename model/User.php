@@ -7,6 +7,9 @@ class User extends Model{
 		$login = $_POST['login'];
 		$password = $_POST['password'];
 		$email = $_POST['e-mail'];
+		$salt = "ichbindusel";
+		$password = $password.$salt;
+		$password = md5($password);
 
 		try{
 			$this->db->beginTransaction();
@@ -25,6 +28,8 @@ class User extends Model{
 			echo "erreur : ".$e->getMessage()."<br/>";
 			exit();
 		}
+
+		return true;
 		
 	}
 

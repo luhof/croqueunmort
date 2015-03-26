@@ -21,3 +21,15 @@ header{
 	width : 960px;
 	margin : 20px auto 0 auto;
 }
+
+.error, .success{
+	padding : 20px;
+	color : #fff;
+}
+.error{
+	background-color : #c0392b;
+}
+
+.success{
+	background-color : #16a085;	
+}

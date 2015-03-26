@@ -2,7 +2,7 @@
 	
 	<form action="user-login" method="POST">
 	<?php
-		$this->setForm("login");
+		$this->setForm(2);
 		$form = $this->vars['form'];
 		foreach($form as $param){
 			if($param['name']!=""&&$param['type']!="hidden") echo $param['name']."<br/>";
@@ -20,7 +20,7 @@
 
 	<?php
 
-	$this->setForm("register");
+	$this->setForm(1);
 	$form = $this->vars['form'];
 	foreach($form as $param){
 			if($param['name']!=""&&$param['type']!="hidden") echo $param['name']."<br/>";
