@@ -1,20 +1,210 @@
-*{
-	font-family : 'Tahoma';
+﻿@charset "utf-8";
+/* CSS Document */
+
+
+
+/* Général */
+@font-face {
+    font-family: FuturaHand;
+    src: url('../fonts/FuturaHandwritten-webfont.eot');
+    src: url('../fonts/FuturaHandwritten-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/FuturaHandwritten-webfont.woff2') format('woff2'),
+         url('../fonts/FuturaHandwritten-webfont.woff') format('woff'),
+         url('../fonts/FuturaHandwritten-webfont.ttf') format('truetype'),
+         url('../fonts/FuturaHandwritten-webfont.svg#futurahandwrittenmedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+	background-color: #C5D596;
+	color: #0D1B28;
+	font-family: FuturaHand, 'Comic Sans MS', cursive, sans-serif;
+	font-size: 20px;
+}
+p {
+	margin: 10px 0;
+}
+a {
+	color: #017489;
+	font-weight: bold;
+	text-decoration: none;
+	transition: all 0.5s ease-out;
+}
+a:hover {
+	color: #073252;
+}
+section {
+	margin: 3% auto 0 auto;
+	width: 60%;
+}
+article {
+	background-color: #FFFFFF;
+	padding: 3%;
+}
+article img {
+	display: inline-block;
+	height: auto;
+	margin: 1% 0;
+	width: 100%;
+}
+header {
+	background-color: #FFFFFF;
+	background-image: url(../images/babysitting.jpg);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 30%;
+}
+footer {
+	background-color: #80B19B;
+	font-size: 85%;
+	margin: 3% 0 0 0;
+	padding: 0.5% 0;
+	text-align: center;
 }
 
-header a{
-	color : #fff;
 
+
+/* Titres */
+h1 {
+	font-size: 200%;
+	padding: 0 0 0 20%;
+}
+.title1 {
+	font-size: 200%;
+	margin: 0 0 2% 0;
+}
+.title2 {
+	font-size: 125%;
+}
+.row-3 .title2 {
+	margin: 3% 0 0 0;
 }
 
-html, body, h1, h2{
-	margin : 0;
+
+
+/* Structure */
+.rows {
+	margin: 0 -3% 0 -3%;
+}
+.row-2 {
+	display: inline-block;
+	margin: 0 3%;
+	vertical-align: top;
+	width: 43%;
+}
+.row-3 {
+	display: inline-block;
+	margin: 0 3%;
+	text-align: center;
+	vertical-align: top;
+	width: 26.5%;
 }
 
-header{
-	background-color : #000;
-	color : #fff;
-	padding : 30px;
+
+
+/* Boutons */
+.btn {
+	background-color: #80B19B;
+	color: #FFFFFF;
+	display: inline-block;
+	font-size: 110%;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	transition: all 0.5s ease-out;
+}
+.btn:hover {
+	background-color: #017489;
+	color: #FFFFFF;
+}
+
+
+
+/* Navigation */
+nav {
+	background-color: #0D1B28;
+	text-align: center;
+}
+nav a {
+	color: #E8DDCB;
+	display: inline-block;
+	text-decoration: none;
+	padding: 2% 5%;
+}
+nav a:hover {
+	color: #80B19B;
+}
+nav li {
+	display: inline-block;
+}
+nav #active-menu a {
+	border-bottom: #017489 4px solid;
+	color: #80B19B;
+}
+
+
+
+/* Tableaux */
+/*table {
+	width: 100%;
+}
+.blue-table th {
+	background-color: #18B3A3;
+	color: #FFFFFF;
+	padding: 1%;
+	text-align: center;
+}
+tr {
+	border-right: 2px solid #E9E7E7;
+}
+tr:last-child {
+	border-bottom: 2px solid #E9E7E7;
+}
+tr:nth-child(2n+1) {
+	background-color: #E9E7E7;
+}
+td {
+	padding: 1%;
+	text-align: right;
+}*/
+
+
+
+/* Formulaires */
+input[type="text"], input[type="password"], input[type="email"], textarea {
+	background-color: #E9E7E7;
+	border: 3px #E9E7E7 solid;
+	color: #1D0F06;
+	font-family: FuturaHand, 'Comic Sans MS', cursive, sans-serif;
+	font-size: 100%;
+	padding: 1%;
+	margin: 1% 0;
+	width: 100%;
+	transition: all 0.3s ease-out 0s;
+}
+textarea {
+	height: 200px;
+}
+input[type="text"]:hover, textarea:hover {
+	border: 3px #1D0F06 solid;
+}
+input[type="submit"], input[type="button"] {
+	background-color: #80B19B;
+	border: 0;
+	cursor: pointer;
+	font-family: FuturaHand, 'Comic Sans MS', cursive, sans-serif;
+	color: #FFFFFF;
+	display: inline-block;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	font-size: 110%;
+	font-weight: bold;
+	transition: all 0.5s ease-out 0s;
+}
+input[type="submit"]:hover {
+	background-color: #017489;
 }
 
 #wrapper{
@@ -32,4 +222,36 @@ header{
 
 .success{
 	background-color : #16a085;	
+}
+
+.by {
+	font-size: 85%;
+	text-align: right;
+}
+strong {
+	font-weight: bold;
+}
+.center {
+	text-align: center;
+}
+.fa {
+	color: #073252;
+}
+nav .fa {
+	color: #FFFFFF;
+}
+header .btn {
+	float: right;
+	margin: 0.5%;
+}
+hr {
+	border: 0;
+	clear: both;
+	height: 0;
+	margin: 0;
+	visibility: hidden;
+}
+.fa-5x {
+	margin-top: 6%;
+
 }
