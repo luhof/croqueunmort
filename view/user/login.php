@@ -3,9 +3,15 @@
     <article>
 
       <div class="rows">
+      	<?php
+      	if(isset($this->vars['error'])){
+      		?> <div class='error'> <?php
+      		echo $this->vars['error'];
+      		?></div> <?php
+      	}
+      	?>
         <div class="row-2">
           	<h3 class="title2">Connexion</h3>
-          	
           	<form action="user-signin" method="POST">
 			<?php
 				$this->setForm("login");

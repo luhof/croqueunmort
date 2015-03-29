@@ -1,3 +1,9 @@
+<?php
+	if(!isset($_SESSION)){
+		session_start();
+	}
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -27,7 +33,22 @@
 <body>
 
 	<header>
+		<?php
+		if(!isset($_SESSION['idUser']) && !isset($_SESSION['username'])) {
+		?>
+
 		<a class="btn" href="/croqueunmort/user-login"><i class="fa fa-sign-in"></i> S'inscrire/Se connecter</a>
+		
+		<?php
+		}
+		else{
+		?>
+
+		<div class="btn">Bienvenue, <?php echo $_SESSION['username']; ?> ! <a class="fa fa-sign-in" href="/croqueunmort/user-disconnect">se déconnecter</a></div>
+
+		<?php
+		}
+		?>
 		<hr />
 		<h1>
 			<span class="title1">Croque un mort</span><br />Cuisinez vos cadavres exquis
@@ -98,13 +119,6 @@
 
 	<?php echo $contentLayout ?>
 
-      <!--<h2> every user </h2>
-      <?php
-        //$users = $this->request('Pages', 'getUsers');
-        //foreach($users as $user){
-        //  echo('<a href=/croqueunmort/pages/view/'.$user->idUser.'>'.$user->username.'</a><br/>');
-        //}
-      ?>-->
 
 	<footer>
 		<p>© <?php echo date('Y');?> <a href="#">Croque un mort</a>, cuisinez vos cadavres exquis | <a href="#" title="Mentions légales">Mentions légales</a> | <a href="#" title="Contact">Contact</a></p>
