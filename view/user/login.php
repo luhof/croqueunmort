@@ -6,7 +6,7 @@
         <div class="row-2">
           	<h3 class="title2">Connexion</h3>
           	
-          	<form action="user-login" method="POST">
+          	<form action="user-signin" method="POST">
 			<?php
 				$this->setForm("login");
 				$form = $this->vars['form'];

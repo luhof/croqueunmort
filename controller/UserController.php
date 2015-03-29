@@ -34,11 +34,15 @@
 			
 		}
 
+		function signin(){
+			echo "you signed in !";
+		}
+
 		function setForm($type){
 
 			switch($type){
 				
-				case 1:
+				case "register":
 					$params = array(	
 					array(
 						"label"	=> 'Nom d\'utilisateur',
@@ -58,7 +62,7 @@
 					);
 					break;
 
-				case 2:
+				case "login":
 					$params = array(	
 					array(
 						"label"	=> 'Nom d\'utilisateur',
