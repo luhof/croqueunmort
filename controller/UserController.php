@@ -21,15 +21,31 @@
 				$this->set('error', 'Merci de remplir tous les champs, sot !');
 			}
 
-			if(($_POST['password'] != $_POST['passwordConfirm'])){
+			if($correct == true && (($_POST['password'] != $_POST['passwordConfirm']))){
 				$this->set('error', 'Le mot de passe et la confirmation ne correspondent pas !!');
 				$correct = false;
 			}
 
+			$this->loadModel('User');
+			if(($this->User->getIDByUserName($_POST['login']))){
+				$this->set('error', 'Le pseudo choisi est déjà pris, dommage !');
+				$correct = false;
+			}
+
+			if (!filter_var($_POST['e-mail'], FILTER_VALIDATE_EMAIL)) {
+    			$this->set('error', 'L\'e-mail entré n\'est pas valide');
+    			$correct = false;
+			}
+
+
+
 			if($correct){
-				$this->loadModel('User');
 				$this->User->createSecondTable('userinfo');
 				$this->User->registerUser();
+			}
+
+			else{
+				$this->render('login');
 			}
 		}
 

@@ -19,7 +19,7 @@
 				foreach($form as $param)
 				{
 					if ($param['name'] != "" && $param['type'] != "hidden")
-						echo $param['name']."<br/>";
+						echo $param['label']."<br/>";
 					echo "<input type='".$param['type']."' name='".$param['name']."'";
 					
 					if (isset($param['value']))
@@ -41,7 +41,7 @@
 				foreach($form as $param)
 				{
 					if ($param['name'] != "" && $param['type'] != "hidden")
-						echo $param['name']."<br/>";
+						echo $param['label']."<br/>";
 					echo "<input type='".$param['type']."' name='".$param['name']."'";
 					
 					if (isset($param['value']))
