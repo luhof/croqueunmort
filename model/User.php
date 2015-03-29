@@ -13,15 +13,15 @@ class User extends Model{
 		$password = md5($password);
 
 		//here insert if login doesn't exist !!
-		
+
 		try{
 			$this->db->beginTransaction();
 
 			$registration1 = $this->db->prepare('INSERT INTO '.$this->table.' (username) VALUES (:login)');
 			$registration2 = $this->db->prepare('INSERT INTO '.$this->table2.' (email, pwd, create_time) VALUES (:email, :pwd, CURDATE())');
 
-			$registration1->execute(array(':login'=>$login));
-			$registration2->execute(array(':email'=>$email, ':pwd'=>$password));
+			$registration1->execute(array('login'=>$login));
+			$registration2->execute(array('email'=>$email, 'pwd'=>$password));
 
 			$this->db->commit();
 		}
@@ -49,8 +49,8 @@ class User extends Model{
 		if(!$idUser) return "user";
 
 		try{
-			$login = $this->db->prepare("SELECT * FROM ".$this->table2." NATURAL JOIN ".$this->table." WHERE idUser = ".$idUser." AND pwd = '".$password."'");
-			$login->execute();
+			$login = $this->db->prepare("SELECT * FROM ".$this->table2." NATURAL JOIN ".$this->table." WHERE idUser = :idUser AND pwd = '".$password."'");
+			$login->execute(array('idUser'=>$idUser));
 			$result = $login->fetch(PDO::FETCH_ASSOC);
 		}
 		catch(Exception $e){
