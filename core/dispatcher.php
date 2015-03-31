@@ -13,9 +13,6 @@ class Dispatcher{
 		}
 
 		$controller = $this->loadController();
-		if(!$controller){
-			$this->error('page not found');
-		}
 		//echo $this->request->action;
 
 		if(!in_array($this->request->action, get_class_methods($controller))){

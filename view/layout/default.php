@@ -93,8 +93,8 @@
           <span class="menu">Entamer un cadavre</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'corpse-continueCorpse') { echo 'class="active-menu"'; } ?>>
-        <a href="/croqueunmort/corpse-continue" title="En continuer un">
+      <li <?php if ($pageName == 'corpse-continuecorpse') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/corpse-continuecorpse" title="En continuer un">
           <i class="fa fa-comments-o fa-fw"></i>
           <span class="menu">En continuer un</span>
         </a>
