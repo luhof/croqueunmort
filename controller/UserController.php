@@ -88,8 +88,14 @@
 			
 		}
 
-		function showProfile($idUser){
+		function showProfile($login){
+			$idUser = $this->User->getIDByUserName($login);
 			
+			$userInfo = $this->User->getUserInfo($idUser);
+			$userInfo['userName'] = $login;
+
+			$this->loadmodel('corpse')
+			$tableau['listcopse'] = $this->corpse->getcorpsebyuser($iduser)
 		}
 
 		function setForm($type){
