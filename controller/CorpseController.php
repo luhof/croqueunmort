@@ -6,18 +6,15 @@
 
 	class CorpseController extends Controller{
 
-		function continueCorpse(){
-			if(!isset($_SESSION['idUser']) && !isset($_SESSION['username'])){
-				$this->set('error', 'Vous devez être authentifié pour continuer un cadavre');
-				$this->render('login');
-			}
+		function continuecorpse(){
+			$this->loadModel('Corpse');
+			$this->Corpse->getRandCorpseId();
 		}
 
 
 		function create(){
 			if(!isset($_SESSION['idUser']) && !isset($_SESSION['username'])){
-				$this->set('error', 'Vous devez être authentifié pour créer un cadavre');
-				$this->render('login');
+				header('location: '.SERVER.DS.'user-login');
 			}
 
 		}

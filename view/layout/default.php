@@ -94,7 +94,7 @@
         </a>
       </li>
       <li <?php if ($pageName == 'corpse-continueCorpse') { echo 'class="active-menu"'; } ?>>
-        <a href="/croqueunmort/corpse-continueCorpse" title="En continuer un">
+        <a href="/croqueunmort/corpse-continue" title="En continuer un">
           <i class="fa fa-comments-o fa-fw"></i>
           <span class="menu">En continuer un</span>
         </a>

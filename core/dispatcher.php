@@ -8,7 +8,14 @@ class Dispatcher{
 		$this->request = new Request();
 		ROUTER::parse($this->request->url, $this->request);
 		
+		if(!$this->loadController()){
+			$this->error('There is no controller :(');
+		}
+
 		$controller = $this->loadController();
+		if(!$controller){
+			$this->error('page not found');
+		}
 		//echo $this->request->action;
 
 		if(!in_array($this->request->action, get_class_methods($controller))){
@@ -24,8 +31,14 @@ class Dispatcher{
 
 		$name = ucfirst($this->request->controller.'Controller');
 		$file = ROOT.DS.'controller'.DS.$name.'.php';
-		require_once $file;
-		return new $name($this->request);
+		if(file_exists($file)){
+			require_once $file;
+			return new $name($this->request);
+		}
+		else{
+			return false;
+		}
+
 
 	}
 
