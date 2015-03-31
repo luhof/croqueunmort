@@ -138,8 +138,10 @@ nav a:hover {
 nav li {
 	display: inline-block;
 }
-nav #active-menu a {
+.active-menu {
 	border-bottom: #017489 4px solid;
+}
+.active-menu a {
 	color: #80B19B;
 }
 

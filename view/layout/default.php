@@ -34,88 +34,74 @@
 
 	<header>
 		<?php
-		if(!isset($_SESSION['idUser']) && !isset($_SESSION['username'])) {
+		  if(!isset($_SESSION['idUser']) && !isset($_SESSION['username']))
+      {
 		?>
 
 		<a class="btn" href="/croqueunmort/user-login"><i class="fa fa-sign-in"></i> S'inscrire/Se connecter</a>
 		
 		<?php
-		}
-		else{
+		  }
+
+		  else
+      {
 		?>
 
-		<div class="btn">Bienvenue, <?php echo $_SESSION['username']; ?> ! <a class="fa fa-sign-in" href="/croqueunmort/user-disconnect">se déconnecter</a></div>
+		<span class="btn">Bienvenue, <?php echo $_SESSION['username']; ?> ! <i class="fa fa-sign-out"></i> <a href="/croqueunmort/user-disconnect">Se déconnecter</a></span>
 
 		<?php
-		}
+		  }
 		?>
 		<hr />
-		<h1>
+		
+    <h1>
 			<span class="title1">Croque un mort</span><br />Cuisinez vos cadavres exquis
 		</h1>
 	</header>
 	
-	<?php $page = basename($_SERVER['SCRIPT_NAME']); ?>
+	<?php $pageName = basename($_SERVER['REQUEST_URI']); ?>
 
-	<!-- Ce code là est super dégueu en plus il marche pas mais on le fera plus beau plus tard -->
 	<nav>
-   		<ul>
-			<li
-				    <?php if ($page == 'index.php') {
-							echo 'id="active-menu"';}
-						?>>
-               	<a href="/croqueunmort/" title="Accueil">
-               		<span class="fa fa-home fa-fw"></span>
-                   	<span class="menu">Accueil</span>
-                </a>
-           </li>
-			     <li
-           <?php if ($page == '/croqueunmort/pages-last.php') {
-              echo 'id="active-menu"';}
-            ?>>
-               	<a href="/croqueunmort/pages-last" title="Derniers cadavres">
-					<span class="fa fa-history fa-fw"></span>
-                   	<span class="menu">Derniers cadavres</span>
-                </a>
-           </li>
-           <li
-           <?php if ($page == '/croqueunmort/pages-top') {
-              echo 'id="active-menu"';}
-            ?>>
-               	<a href="/croqueunmort/pages-top" title="La crème">
-               		<span class="fa fa-star fa-fw"></span>
-                   	<span class="menu">La crème</span>
-                </a>
-           </li>
-           <li
-           <?php if ($page == 'random-corpse.php') {
-              echo 'id="active-menu"';}
-            ?>>
-                <a href="random-corpse.php" title="Au hasard">
-          <span class="fa fa-random fa-fw"></span>
-                    <span class="menu">Au hasard</span>
-                </a>
-           </li>
-           <li
-           <?php if ($page == '/croqueunmort/corpse-create') {
-              echo 'id="active-menu"';}
-            ?>>
-               	<a href="/croqueunmort/corpse-create" title="Entamer un cadavre">
-					<span class="fa fa-comment fa-fw"></span>
-                   	<span class="menu">Entamer un cadavre</span>
-                </a>
-           </li>
-           <li
-           <?php if ($page == '/croqueunmort/corpse-continueCorpse') {
-              echo 'id="active-menu"';}
-            ?>>
-                <a href="/croqueunmort/corpse-continueCorpse" title="En continuer un">
-                	<span class="fa fa-comments-o fa-fw"></span>
-                    <span class="menu">En continuer un</span>
-                </a>
-           </li>
-    	</ul>
-  	</nav>
+   	<ul>
+			<li <?php if ($pageName == 'croqueunmort') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/" title="Accueil">
+          <i class="fa fa-home fa-fw"></i>
+          <span class="menu">Accueil</span>
+        </a>
+      </li>
+			<li <?php if ($pageName == 'pages-last') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/pages-last" title="Derniers cadavres">
+					<i class="fa fa-history fa-fw"></i>
+          <span class="menu">Derniers cadavres</span>
+        </a>
+      </li>
+      <li <?php if ($pageName == 'pages-top') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/pages-top" title="La crème">
+          <i class="fa fa-star fa-fw"></i>
+          <span class="menu">La crème</span>
+        </a>
+      </li>
+      <li <?php if ($pageName == 'random-corpse') { echo 'class="active-menu"'; } ?>>
+        <a href="random-corpse.php" title="Au hasard">
+          <i class="fa fa-random fa-fw"></i>
+          <span class="menu">Au hasard</span>
+        </a>
+      </li>
+      <li <?php if ($pageName == 'corpse-create') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/corpse-create" title="Entamer un cadavre">
+					<i class="fa fa-comment fa-fw"></i>
+          <span class="menu">Entamer un cadavre</span>
+        </a>
+      </li>
+      <li <?php if ($pageName == 'corpse-continueCorpse') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/corpse-continueCorpse" title="En continuer un">
+          <i class="fa fa-comments-o fa-fw"></i>
+          <span class="menu">En continuer un</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
 
 	<?php echo $contentLayout ?>
 
