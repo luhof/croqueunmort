@@ -224,14 +224,14 @@ input[type="submit"]:hover {
 	background: #017489;
 }
 .error, .success {
-	padding : 20px;
-	color : #fff;
+	padding : 5%;
+	color : #FFFFFF;
 }
 .error {
-	background : #c0392b;
+	background : #C0392B;
 }
 .success {
-	background : #16a085;	
+	background : #16A085;	
 }
 
 

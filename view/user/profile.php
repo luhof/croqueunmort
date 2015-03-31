@@ -1,5 +1,5 @@
   <section>
-    <h2 class="title1"><i class="fa fa-sign-in"></i> S'inscrire/Se connecter</h2>
+    <h2 class="title1"><i class="fa fa-child"></i> S'inscrire/Se connecter</h2>
     <article>
 
       <div class="rows">

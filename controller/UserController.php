@@ -88,6 +88,10 @@
 			
 		}
 
+		function showProfile($idUser){
+			
+		}
+
 		function setForm($type){
 
 			switch($type){

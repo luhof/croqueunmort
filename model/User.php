@@ -90,9 +90,19 @@ class User extends Model{
 		else{
 			return $result['idUser'];
 		}
-		
+	}
 
-
+	function getUserInfo($idUser){
+		try{
+			$login = $this->db->prepare("SELECT * FROM ".$this->table2." NATURAL JOIN ".$this->table." WHERE idUser = :idUser AND pwd = '".$password."'");
+			$login->execute(array('idUser'=>$idUser));
+			$result = $login->fetch(PDO::FETCH_ASSOC);
+		}
+		catch(Exception $e){
+			$this->db->rollback();
+			echo "erreur with query";
+			exit();
+		}
 	}
 
 }
