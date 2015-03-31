@@ -3,7 +3,7 @@
 
 
 
-/* Général */
+/* Font */
 @font-face {
     font-family: FuturaHand;
     src: url('../fonts/FuturaHandwritten-webfont.eot');
@@ -15,11 +15,14 @@
     font-weight: normal;
     font-style: normal;
 }
+
+
+
+/* Global */
 body {
-	background-color: #C5D596;
+	background: #C5D596;
 	color: #0D1B28;
-	font-family: FuturaHand, 'Comic Sans MS', cursive, sans-serif;
-	font-size: 20px;
+	font: 20px FuturaHand, 'Comic Sans MS', cursive, sans-serif;
 }
 p {
 	margin: 10px 0;
@@ -33,12 +36,8 @@ a {
 a:hover {
 	color: #073252;
 }
-section {
-	margin: 3% auto 0 auto;
-	width: 60%;
-}
 article {
-	background-color: #FFFFFF;
+	background: #FFFFFF;
 	padding: 3%;
 }
 article img {
@@ -47,43 +46,36 @@ article img {
 	margin: 1% 0;
 	width: 100%;
 }
-header {
-	background-color: #FFFFFF;
-	background-image: url(../images/babysitting.jpg);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	height: 30%;
+hr {
+	border: 0;
+	clear: both;
+	height: 0;
+	margin: 0;
+	visibility: hidden;
 }
-footer {
-	background-color: #80B19B;
-	font-size: 85%;
-	margin: 3% 0 0 0;
-	padding: 0.5% 0;
-	text-align: center;
-}
-
-
-
-/* Titres */
-h1 {
-	font-size: 200%;
-	padding: 0 0 0 20%;
-}
-.title1 {
-	font-size: 200%;
-	margin: 0 0 2% 0;
-}
-.title2 {
-	font-size: 125%;
-}
-.row-3 .title2 {
-	margin: 3% 0 0 0;
+strong {
+	font-weight: bold;
 }
 
 
 
 /* Structure */
+header {
+	background: #FFFFFF url(../images/babysitting.jpg) no-repeat center;
+	background-size: cover;
+	height: 30%;
+}
+footer {
+	background: #80B19B;
+	font-size: 85%;
+	margin: 3% 0 0 0;
+	padding: 0.5% 0;
+	text-align: center;
+}
+section {
+	margin: 3% auto 0 auto;
+	width: 60%;
+}
 .rows {
 	margin: 0 -3% 0 -3%;
 }
@@ -103,9 +95,27 @@ h1 {
 
 
 
-/* Boutons */
+/* Titles */
+h1 {
+	font-size: 200%;
+	padding: 0 0 0 20%;
+}
+.title1 {
+	font-size: 200%;
+	margin: 0 0 2% 0;
+}
+.title2 {
+	font-size: 125%;
+}
+.row-3 .title2 {
+	margin: 3% 0 0 0;
+}
+
+
+
+/* Buttons */
 .btn {
-	background-color: #80B19B;
+	background: #80B19B;
 	color: #FFFFFF;
 	display: inline-block;
 	font-size: 110%;
@@ -115,15 +125,19 @@ h1 {
 	transition: all 0.5s ease-out;
 }
 .btn:hover {
-	background-color: #017489;
+	background: #017489;
 	color: #FFFFFF;
+}
+header .btn {
+	float: right;
+	margin: 0.5%;
 }
 
 
 
 /* Navigation */
 nav {
-	background-color: #0D1B28;
+	background: #0D1B28;
 	text-align: center;
 }
 nav a {
@@ -143,6 +157,9 @@ nav li {
 }
 .active-menu a {
 	color: #80B19B;
+}
+nav .fa {
+	color: #FFFFFF;
 }
 
 
@@ -173,65 +190,56 @@ td {
 
 
 
-/* Formulaires */
-input[type="text"], input[type="password"], input[type="email"], textarea {
-	background-color: #E9E7E7;
+/* Forms */
+input[type="text"], input[type="password"], input[type="email"] {
+	background: #E9E7E7;
 	border: 3px #E9E7E7 solid;
 	color: #1D0F06;
-	font-family: FuturaHand, 'Comic Sans MS', cursive, sans-serif;
-	font-size: 100%;
+	font: 100% FuturaHand, 'Comic Sans MS', cursive, sans-serif;
 	padding: 1%;
 	margin: 1% 0;
 	width: 100%;
 	transition: all 0.3s ease-out 0s;
 }
-textarea {
-	height: 200px;
-}
-input[type="text"]:hover, textarea:hover {
-	border: 3px #1D0F06 solid;
+input[type="text"]:hover, input[type="text"]:focus, 
+input[type="password"]:hover, input[type="password"]:focus, 
+input[type="email"]:hover, input[type="email"]:focus {
+	border: 3px #80B19B solid;
 }
 input[type="submit"], input[type="button"] {
-	background-color: #80B19B;
+	background: #80B19B;
 	border: 0;
 	cursor: pointer;
-	font-family: FuturaHand, 'Comic Sans MS', cursive, sans-serif;
+	font-family: 0% FuturaHand, 'Comic Sans MS', cursive, sans-serif;
 	color: #FFFFFF;
 	display: inline-block;
+	margin-top: 2%;
 	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
-	font-size: 110%;
 	font-weight: bold;
 	transition: all 0.5s ease-out 0s;
 }
 input[type="submit"]:hover {
-	background-color: #017489;
+	background: #017489;
 }
-
-#wrapper{
-	width : 960px;
-	margin : 20px auto 0 auto;
-}
-
-.error, .success{
+.error, .success {
 	padding : 20px;
 	color : #fff;
 }
-.error{
-	background-color : #c0392b;
+.error {
+	background : #c0392b;
+}
+.success {
+	background : #16a085;	
 }
 
-.success{
-	background-color : #16a085;	
-}
 
+
+/* Others */
 .by {
 	font-size: 85%;
 	text-align: right;
-}
-strong {
-	font-weight: bold;
 }
 .center {
 	text-align: center;
@@ -239,21 +247,7 @@ strong {
 .fa {
 	color: #073252;
 }
-nav .fa {
-	color: #FFFFFF;
-}
-header .btn {
-	float: right;
-	margin: 0.5%;
-}
-hr {
-	border: 0;
-	clear: both;
-	height: 0;
-	margin: 0;
-	visibility: hidden;
-}
+
 .fa-5x {
 	margin-top: 6%;
-
 }
