@@ -29,6 +29,27 @@
 
 		}
 
+		/* Separate all ids of users who participed in a corpse*/
+		function separateAuthors($corpse){
+			$authors = explode(",", $corpse[corpse_by]);
+			return $authors;
+		}
+
+		/* Get the finished or on going corpses a user participated in */
+		function getCorpsesFromUser($idUser, $finished){
+			$corpses = $this->Corpse->getCorpsesInfo($finished);
+			$corpsesFromUser = array();
+
+			foreach($corpses as $corpse){
+				$corpse['corpse_by'] = separateAuthors($corpse);
+
+				if(in_array($idUser), $corpse[corpse_by]){
+					array_push($corpseFromUser, $corpse);
+				}
+			}
+
+			return $corpsesFromUser;
+		}
 
 	}
 

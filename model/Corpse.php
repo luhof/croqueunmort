@@ -32,20 +32,20 @@ class Corpse extends Model{
 		return $result;
 	}
 
-	/* Get all finished corpses */
-	function getFinishedCorpses(){
-		$finishedCorpses = $this->db->prepare("SELECT idCorpse FROM :table WHERE finished = TRUE");
-		$finishedCorpses->execute(array('table'=>$this->table));
-		$result = $finishedCorpses->fetch(PDO::FETCH_NUM);
+	/* Get all informations about a few corpses depending on their status (finished or on going) */
+	function getCorpsesInfo($finished){
+		$corpsesInfo = $this->db->prepare("SELECT * FROM :table WHERE finished = :finished");
+		$corpsesInfo->execute(array('table'=>$this->table, 'finished'=>$finished));
+		$result = $corpsesInfo->fetch(PDO::FETCH_ASSOC);
 
 		return $result;
 	}
 
-	/* Get all on going corpses */
-	function getOnGoingCorpses(){
-		$onGoingCorpses = $this->db->prepare("SELECT idCorpse FROM :table WHERE finished = FALSE");
-		$onGoingCorpses->execute(array('table'=>$this->table));
-		$result = $onGoingCorpses->fetch(PDO::FETCH_NUM);
+	/* Get all informations about a corpse by its id */
+	function getCorpseInfo($idCorpse){
+		$corpseInfo = $this->db->prepare("SELECT * FROM :table WHERE idCorpse = :idCorpse");
+		$corpseInfo->execute(array('table'=>$this->table, 'idCorpse'=>$idCorpse));
+		$result = $corpseInfo->fetch(PDO::FETCH_ASSOC);
 
 		return $result;
 	}
