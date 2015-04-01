@@ -3,7 +3,6 @@
 class User extends Model{
 
 	function registerUser(){
-
 		$login = $_POST['login'];
 		$login = strtolower($login);
 		$password = $_POST['password'];
@@ -17,11 +16,11 @@ class User extends Model{
 		try{
 			$this->db->beginTransaction();
 
-			$registration1 = $this->db->prepare('INSERT INTO '.$this->table.' (username) VALUES (:login)');
-			$registration2 = $this->db->prepare('INSERT INTO '.$this->table2.' (email, pwd, create_time) VALUES (:email, :pwd, CURDATE())');
+			$registration1 = $this->db->prepare('INSERT INTO :table (username) VALUES (:login)');
+			$registration2 = $this->db->prepare('INSERT INTO :table (email, pwd, create_time) VALUES (:email, :pwd, CURDATE())');
 
-			$registration1->execute(array('login'=>$login));
-			$registration2->execute(array('email'=>$email, 'pwd'=>$password));
+			$registration1->execute(array('table'=>$this->table, 'login'=>$login));
+			$registration2->execute(array('table'=>$this->table2, 'email'=>$email, 'pwd'=>$password));
 
 			$this->db->commit();
 		}
@@ -32,11 +31,9 @@ class User extends Model{
 		}
 
 		return true;
-		
 	}
 
 	function login(){
-
 		$login = $_POST['login'];
 		$password = $_POST['password'];
 		$salt = "ichbindusel";
@@ -48,16 +45,9 @@ class User extends Model{
 
 		if(!$idUser) return "user";
 
-		try{
-			$login = $this->db->prepare("SELECT * FROM ".$this->table2." NATURAL JOIN ".$this->table." WHERE idUser = :idUser AND pwd = '".$password."'");
-			$login->execute(array('idUser'=>$idUser));
-			$result = $login->fetch(PDO::FETCH_ASSOC);
-		}
-		catch(Exception $e){
-			$this->db->rollback();
-			echo "erreur with query";
-			exit();
-		}
+		$login = $this->db->prepare("SELECT * FROM :table2 NATURAL JOIN :table WHERE idUser = :idUser AND pwd = :pwd");
+		$login->execute(array('table2'=>$this->table2, 'idUser'=>$idUser, 'table'=>$this->table, 'pwd'=>$password));
+		$result = $login->fetch(PDO::FETCH_ASSOC);
 
 		if($result!=NULL){
 			//session_start();
@@ -67,60 +57,29 @@ class User extends Model{
 		}
 
 		else return "password";
-
 	}
 
 	function getIDByUserName($login){
-		try{
-			$login1 = $this->db->prepare("SELECT idUser FROM ".$this->table." WHERE username = '".$login."'");
-			$login1->execute(array());
-			$result = $login1->fetch(PDO::FETCH_ASSOC);
-		}
-		catch(Exception $e){
-			$this->db->rollback();
-			echo "erreur with query";
-			exit();
-		}
+		$login1 = $this->db->prepare("SELECT idUser FROM :table WHERE username = :login");
+		$login1->execute(array('table'=>$this->table, 'login'=>$login));
+		$result = $login1->fetch(PDO::FETCH_ASSOC);
 
-		if(!$result){
-			return false;
-		}
+		if(!$result) return false;
 
-		else{
-			return $result['idUser'];
-		}
+		else return $result['idUser'];
 	}
 
-
+	/* Get profile informations by user id */
 	function getUserInfo($idUser){
-		$info = $this->db->prepare("SELECT avatar, create_time, favoriteCorpse FROM ce_userinfo WHERE idUser = :idUser");
-		$info->execute(array('idUser'=>$idUser));
+		$info = $this->db->prepare("SELECT avatar, create_time, favoriteCorpse FROM :table WHERE idUser = :idUser");
+		$info->execute(array('table'=>$this->table2, 'idUser'=>$idUser));
 		$results = $info->fetch(PDO::FETCH_ASSOC);
 
-		$finishedCorpses = $this->db->prepare("SELECT idCorpse, corpse_by FROM ce_corpse WHERE finished = TRUE");
-		$finishedCorpses->execute();
-		$resultsFC = $finishedCorpses->fetchAll(PDO::FETCH_ASSOC);
+		$userInfo['avatar'] = $results['avatar'];
+		$userInfo['since'] = $results['create_time'];
+		$userInfo['favoriteCorpse'] = $results['favoriteCorpse'];
 
-		$onGoingCorpses = $this->db->prepare("SELECT idCorpse, corpse_by FROM ce_corpse WHERE finished = FALSE");
-		$onGoingCorpses->execute();
-		$resultsOGC = $onGoingCorpses->fetchAll(PDO::FETCH_ASSOC);
-
-		$favoriteCorpses = $this->db->prepare("SELECT COUNT(idCorpses) FROM ce_likes WHERE idUser = :idUser");
-		$favoriteCorpses->execute(array('idUser' => $idUser));
-		$nbFavorite = $favoriteCorpses->fetch(PDO::FETCH_ASSOC);
-
-		if($result!=NULL){
-			$userInfo['avatar'] = $results['avatar'];
-			$userInfo['since'] = $results['create_time'];
-
-			$userInfo['nbFinised'] = $resultsFC;
-			$userInfo['nbOnGoing'] = $resultsOGC;
-			$userInfo['nbFavorite'] = $nbFavorite[0];
-
-			$userInfo['favoriteCorpse'] = $results['favoriteCorpse'];
-
-			return $userInfo;
-		}
+		return $userInfo;
 	}
 
 }

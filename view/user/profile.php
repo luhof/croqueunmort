@@ -1,58 +1,26 @@
   <section>
-    <h2 class="title1"><i class="fa fa-child"></i> S'inscrire/Se connecter</h2>
+    <h2 class="title1"><i class="fa fa-cutlery"></i> Des cadavres exquis au menu</h2>
     <article>
 
       <div class="rows">
-      	<?php
-      		if(isset($this->vars['error'])){
-  		?>
-  		<div class='error'> <?php echo $this->vars['error']; ?></div>
-  		<?php
-      		}
-      	?>
-        <div class="row-2">
-          	<h3 class="title2">Connexion</h3>
-          	<form action="user-signin" method="POST">
-			<?php
-				$this->setForm("login");
-				$form = $this->vars['form'];
-				foreach($form as $param)
-				{
-					if ($param['name'] != "" && $param['type'] != "hidden")
-						echo $param['label']."<br/>";
-					echo "<input type='".$param['type']."' name='".$param['name']."'";
-					
-					if (isset($param['value']))
-						echo "value='".$param['value']."'";
-					echo "/><br/>";
-				}
-			?>
-			</form>
-
+        <div class="row-3">
+          <i class="fa fa-check-circle fa-5x"></i>
+          <h3 class="title2">Histoires</h3>
+          <p>Parce qu'on s'est dit que toute une histoire c'était plus cool que juste une phrase</p>
         </div>
 
-        <div class="row-2">
-        	<h3 class="title2">Inscription</h3>
-        	
-        	<form action="user-register" method="POST">
-			<?php
-				$this->setForm("register");
-				$form = $this->vars['form'];
-				foreach($form as $param)
-				{
-					if ($param['name'] != "" && $param['type'] != "hidden")
-						echo $param['label']."<br/>";
-					echo "<input type='".$param['type']."' name='".$param['name']."'";
-					
-					if (isset($param['value']))
-						echo "value='".$param['value']."'";
-					echo "/><br/>";
-				}
-			?>
-			</form>
-			
+        <div class="row-3">
+          <i class="fa fa-spinner fa-5x"></i>
+          <h3 class="title2">BD</h3>
+          <p>Parce qu'on s'est dit que toute une histoire <strong>avec</strong> des images c'était <strong>encore plus</strong> cool</p>
+        </div>
+
+        <div class="row-3">
+          <i class="fa fa-star fa-5x"></i>
+          <h3 class="title2">Eléments prédéfinis</h3>
+          <p>Parce que la grammaire française aurait été <strong>très</strong> pénible à respecter autrement</p>
         </div>
       </div>
 
     </article>
-  </section>		
+  </section>

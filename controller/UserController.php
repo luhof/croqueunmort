@@ -88,14 +88,23 @@
 			
 		}
 
+		/* Show user profile by its username */
 		function showProfile($login){
+			$this->loadModel('User');
 			$idUser = $this->User->getIDByUserName($login);
 			
 			$userInfo = $this->User->getUserInfo($idUser);
 			$userInfo['userName'] = $login;
 
-			$this->loadmodel('corpse')
+
+			$userInfo['nbFinised']['idCorpse, corpse_by']
+
+			$this->loadModel('Corpse');
+			$userInfo['nbFinised'] = $resultsFC;
+			$userInfo['nbOnGoing'] = $resultsOGC;
 			$tableau['listcopse'] = $this->corpse->getcorpsebyuser($iduser)
+
+			$userInfo['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
 		}
 
 		function setForm($type){
