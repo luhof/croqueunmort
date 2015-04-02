@@ -1,5 +1,5 @@
   <section>
-    <h2 class="title1"><i class="fa fa-cutlery"></i> Des cadavres exquis au menu</h2>
+    <h2 class="title1"><i class="fa fa-child"></i> <?php echo($users->idUser); ?></h2>
     <article>
 
       <div class="rows">

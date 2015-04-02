@@ -43,7 +43,7 @@
 			foreach($corpses as $corpse){
 				$corpse['corpse_by'] = separateAuthors($corpse);
 
-				if(in_array($idUser), $corpse[corpse_by]){
+				if(in_array($idUser, $corpse[corpse_by])){
 					array_push($corpseFromUser, $corpse);
 				}
 			}

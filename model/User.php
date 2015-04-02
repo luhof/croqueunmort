@@ -71,15 +71,11 @@ class User extends Model{
 
 	/* Get profile informations by user id */
 	function getUserInfo($idUser){
-		$info = $this->db->prepare("SELECT avatar, create_time, favoriteCorpse FROM :table WHERE idUser = :idUser");
+		$info = $this->db->prepare("SELECT avatar, create_time AS 'since', favoriteCorpse FROM :table WHERE idUser = :idUser");
 		$info->execute(array('table'=>$this->table2, 'idUser'=>$idUser));
 		$results = $info->fetch(PDO::FETCH_ASSOC);
 
-		$userInfo['avatar'] = $results['avatar'];
-		$userInfo['since'] = $results['create_time'];
-		$userInfo['favoriteCorpse'] = $results['favoriteCorpse'];
-
-		return $userInfo;
+		return $results;
 	}
 
 }
