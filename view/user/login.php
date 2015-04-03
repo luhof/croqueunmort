@@ -6,7 +6,7 @@
       	<?php
       		if(isset($this->vars['error'])){
   		?>
-  		<div class='error'> <?php echo $this->vars['error']; ?></div>
+  		<p class="error"> <?php echo $this->vars['error']; ?></p>
   		<?php
       		}
       	?>

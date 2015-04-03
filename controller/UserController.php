@@ -89,19 +89,34 @@
 		}
 
 		/* Show user profile by its username */
-		function showProfile($login){
+		function profileInfo($idUser){
 			$this->loadModel('User');
-			
-			$idUser = $this->User->getIDByUserName($login);
-			
+						
 			$userInfo = $this->User->getUserInfo($idUser);
-			$userInfo['userName'] = $login;
+			$userInfo['avatar'] = ROOT.DS.'webroot'.DS.'images'.DS.$userInfo['avatar'];
+			echo $userInfo['avatar'];
 
 			$this->loadModel('Corpse');
 
-			$userInfo['nbFinised'] = count($this->Corpse->getCorpsesFromUser($idUser, 1));
-			$userInfo['nbOnGoing'] = count($this->Corpse->getCorpsesFromUser($idUser, 0));
-			$userInfo['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
+			//$userInfo['nbFinised'] = count($this->Corpse->getCorpsesFromUser($idUser, 1));
+			//$userInfo['nbOnGoing'] = count($this->Corpse->getCorpsesFromUser($idUser, 0));
+			//$userInfo['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
+
+			return $userInfo;
+		}
+
+		function profile($idUser){
+			$this->loadModel('User');
+			$user = $this->User->findFirst(array(
+			'conditions'	=> array('idUser'=>$idUser)
+			));
+			if(empty($user)){
+				$this->e404('User introuvable');
+			}
+			$this->set('user', $user);
+
+			$infos = $this->profileInfo($idUser);
+			$this->set('infos', $infos);
 		}
 
 		function setForm($type){

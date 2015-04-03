@@ -1,11 +1,13 @@
   <section>
-    <h2 class="title1"><i class="fa fa-child"></i> <?php echo($users->idUser); ?></h2>
+    <h2 class="title1"><i class="fa fa-child"></i> <?php echo($user->username); ?></h2>
     <article>
 
       <div class="rows">
+        <img src="<?php echo ($infos['avatar']); ?>" />
+        Inscrit depuis le <?php echo($infos['since']); var_dump($infos); ?>
         <div class="row-3">
           <i class="fa fa-check-circle fa-5x"></i>
-          <h3 class="title2">Histoires</h3>
+          <h3 class="title2"><?php echo($infos->nbFinished); ?> Histoires</h3>
           <p>Parce qu'on s'est dit que toute une histoire c'était plus cool que juste une phrase</p>
         </div>
 

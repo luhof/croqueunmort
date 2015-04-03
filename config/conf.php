@@ -10,6 +10,7 @@ class Conf{
 					'host'		=> 'localhost',
 					'database'	=> 'cadavre',
 					'login'		=> 'lolilol',
+					//'login'		=> 'root',	// Login pour Alexander
 					'password'	=> '',
 					),
 

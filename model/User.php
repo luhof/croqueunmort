@@ -16,11 +16,11 @@ class User extends Model{
 		try{
 			$this->db->beginTransaction();
 
-			$registration1 = $this->db->prepare('INSERT INTO :table (username) VALUES (:login)');
-			$registration2 = $this->db->prepare('INSERT INTO :table (email, pwd, create_time) VALUES (:email, :pwd, CURDATE())');
+			$registration1 = $this->db->prepare("INSERT INTO $this->table (username) VALUES (:login)");
+			$registration2 = $this->db->prepare("INSERT INTO $this->table2 (email, pwd, create_time, avatar) VALUES (:email, :pwd, CURDATE()), 'niutniut.jpg'");
 
-			$registration1->execute(array('table'=>$this->table, 'login'=>$login));
-			$registration2->execute(array('table'=>$this->table2, 'email'=>$email, 'pwd'=>$password));
+			$registration1->execute(array('login'=>$login));
+			$registration2->execute(array('email'=>$email, 'pwd'=>$password));
 
 			$this->db->commit();
 		}
@@ -45,8 +45,8 @@ class User extends Model{
 
 		if(!$idUser) return "user";
 
-		$login = $this->db->prepare("SELECT * FROM :table2 NATURAL JOIN :table WHERE idUser = :idUser AND pwd = :pwd");
-		$login->execute(array('table2'=>$this->table2, 'idUser'=>$idUser, 'table'=>$this->table, 'pwd'=>$password));
+		$login = $this->db->prepare("SELECT * FROM $this->table2 NATURAL JOIN $this->table WHERE idUser = :idUser AND pwd = :pwd");
+		$login->execute(array('idUser'=>$idUser, 'pwd'=>$password));
 		$result = $login->fetch(PDO::FETCH_ASSOC);
 
 		if($result!=NULL){
@@ -60,8 +60,8 @@ class User extends Model{
 	}
 
 	function getIDByUserName($login){
-		$login1 = $this->db->prepare("SELECT idUser FROM :table WHERE username = :login");
-		$login1->execute(array('table'=>$this->table, 'login'=>$login));
+		$login1 = $this->db->prepare("SELECT idUser FROM $this->table WHERE username = :login");
+		$login1->execute(array('login'=>$login));
 		$result = $login1->fetch(PDO::FETCH_ASSOC);
 
 		if(!$result) return false;
@@ -71,8 +71,9 @@ class User extends Model{
 
 	/* Get profile informations by user id */
 	function getUserInfo($idUser){
-		$info = $this->db->prepare("SELECT avatar, create_time AS 'since', favoriteCorpse FROM :table WHERE idUser = :idUser");
-		$info->execute(array('table'=>$this->table2, 'idUser'=>$idUser));
+		//$info = $this->db->prepare("SELECT avatar, create_time AS 'since', favoriteCorpse FROM $this->table2 WHERE idUser = 16");
+		$info = $this->db->prepare("SELECT avatar, DATE_FORMAT(create_time, '%d/%m/%Y') AS 'since', favoriteCorpse FROM ce_userinfo WHERE idUser = $idUser");
+		$info->execute(array());
 		$results = $info->fetch(PDO::FETCH_ASSOC);
 
 		return $results;
