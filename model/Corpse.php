@@ -11,6 +11,7 @@ class Corpse extends Model{
 		
 	}
 
+
 	function getRandItemId($type, $number){
 		$table = "ce_".strtolower($type);
 		$idName = "id".$type;
@@ -18,9 +19,30 @@ class Corpse extends Model{
 		$result = $this->db->prepare("SELECT ".$idName." FROM ".$table);
 		$result->execute();
 		$result = $result->fetchAll(PDO::FETCH_ASSOC);
-		echo count($result);
-		print_r($result);
+		//print_r($result);
+		$randKeys = array_rand($result, $number);
+		//$result = array_rand($result, $number);
+		//print_r($randKeys);
 
+		for($i=0; $i<$number; $i++){
+			$resultArr[$i] = $result[$randKeys[$i]];
+		}
+		
+		return $resultArr;
+	}
+
+	/* returns an array filled with informations from id*/
+	function getElemInfosById($type, $id){
+		$table = "ce_".strtolower($type);
+		$idName = "id".$type;
+
+		//didn't managed to make a nice and clean request...
+		//YET TO BE FIXED
+		$elemInfos = $this->db->prepare("SELECT * FROM ".$table." WHERE ".$idName." = ".$id);
+		$elemInfos->execute();
+		$result = $elemInfos->fetch(PDO::FETCH_ASSOC);
+
+		return $result;
 	}
 
 	/* Get corpses a user liked by its ID */

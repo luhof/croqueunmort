@@ -22,16 +22,31 @@
 
 		function createPanel(){
 			$this->loadModel('Corpse');
-			$places 	= $this->Corpse->getRandItemId('Place', 2);
-			$characters = $this->Corpse->getRandItemId('Character', 2);
-			$objects	= $this->Corpse->getRandItemId('Object', 2);
-			$actions	= $this->Corpse->getRandItemId('Action', 2);
+			//select which element to add (here random)
+			$arrayOfElems = array(
+				'Place',
+				'Character',
+				'Object',
+				'Action'
+				);
 
+			$elemType = $arrayOfElems[rand(0,3)];
+			//select corresponding stuff (3 random)
+			$elems 	= $this->Corpse->getRandItemId($elemType, 3);
+			//get more info on each element
+
+			foreach($elems as &$element){
+				$element = $element['id'.$elemType];
+				$element = $this->Corpse->getElemInfosById($elemType, $element);
+			}
+
+			$this->set('elemType', 	$elemType);
+			$this->set('elems', $elems);
 		}
 
 		/* Separate all ids of users who participed in a corpse*/
 		function separateAuthors($corpse){
-			$authors = explode(",", $corpse[corpse_by]);
+			$authors = explode(",", $corpse['corpse_by']);
 			return $authors;
 		}
 
