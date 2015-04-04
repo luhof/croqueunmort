@@ -53,26 +53,26 @@ class Corpse extends Model{
 
 	/* Get corpses a user liked by its ID */
 	function getFavoriteCorpses($idUser){
-		$favoriteCorpses = $this->db->prepare("SELECT * FROM :table NATURAL JOIN ce_likes WHERE idUser = :idUser ORDER BY idCorpse DESC");
+		$favoriteCorpses = $this->db->prepare("SELECT * FROM $this->table NATURAL JOIN ce_likes WHERE idUser = :idUser ORDER BY idCorpse DESC");
 		$favoriteCorpses->execute(array('idUser'=>$idUser));
-		$result = $favoriteCorpses->fetch(PDO::FETCH_ASSOC);
+		$result = $favoriteCorpses->fetchAll(PDO::FETCH_ASSOC);
 
 		return $result;
 	}
 
 	/* Get all informations about a few corpses depending on their status (finished or on going) */
 	function getCorpsesInfo($finished){
-		$corpsesInfo = $this->db->prepare("SELECT * FROM :table WHERE finished = :finished ORDER BY idCorpse DESC");
-		$corpsesInfo->execute(array('table'=>$this->table, 'finished'=>$finished));
-		$result = $corpsesInfo->fetch(PDO::FETCH_ASSOC);
+		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = :finished ORDER BY idCorpse DESC");
+		$corpsesInfo->execute(array('finished'=>$finished));
+		$result = $corpsesInfo->fetchAll(PDO::FETCH_ASSOC);
 
 		return $result;
 	}
 
 	/* Get all informations about a corpse by its id */
 	function getCorpseInfo($idCorpse){
-		$corpseInfo = $this->db->prepare("SELECT * FROM :table WHERE idCorpse = :idCorpse");
-		$corpseInfo->execute(array('table'=>$this->table, 'idCorpse'=>$idCorpse));
+		$corpseInfo = $this->db->prepare("SELECT * FROM $this->table WHERE idCorpse = :idCorpse");
+		$corpseInfo->execute(array('idCorpse'=>$idCorpse));
 		$result = $corpseInfo->fetch(PDO::FETCH_ASSOC);
 
 		return $result;
@@ -80,9 +80,9 @@ class Corpse extends Model{
 
 	/* Get the x more liked corpses */
 	function getBestCorpses($nb){
-		$corpsesInfo = $this->db->prepare("SELECT * FROM :table WHERE finished = true ORDER BY likesCount DESC LIMIT :nb");
-		$corpsesInfo->execute(array('table'=>$this->table, 'nb'=>$nb));
-		$result = $corpsesInfo->fetch(PDO::FETCH_ASSOC);
+		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = true ORDER BY likesCount DESC LIMIT :nb");
+		$corpsesInfo->execute(array('nb'=>$nb));
+		$result = $corpsesInfo->fetchAll(PDO::FETCH_ASSOC);
 
 		return $result;
 	}
