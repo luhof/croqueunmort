@@ -1,10 +1,6 @@
-<section>
-	<article>
-		<h2>
-		erreur 404
-		</h2>
-		<p>
-			<?php echo $msg ?>
-		</p>
-	</article>
-</section>
+  <section>
+    <h2 class="title1"><i class="fa fa-bomb"></i> Erreur 404</h2>
+    <article class="center">
+		<p><?php echo $msg ?></p>
+    </article>
+  </section>

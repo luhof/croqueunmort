@@ -209,15 +209,15 @@ input[type="email"]:hover, input[type="email"]:focus {
 input[type="submit"], input[type="button"] {
 	background: #80B19B;
 	border: 0;
-	cursor: pointer;
-	font-family: 110% FuturaHand, 'Comic Sans MS', cursive, sans-serif;
 	color: #FFFFFF;
+	cursor: pointer;
 	display: inline-block;
+	font: 110% FuturaHand, 'Comic Sans MS', cursive, sans-serif;
+	font-weight: bold;
 	margin-top: 2%;
 	padding: 10px 20px;
 	text-align: center;
 	text-decoration: none;
-	font-weight: bold;
 	transition: all 0.5s ease-out 0s;
 }
 input[type="submit"]:hover {
@@ -249,6 +249,21 @@ input[type="submit"]:hover {
 	color: #073252;
 }
 
-.fa-5x {
+.rows .fa-5x {
 	margin-top: 6%;
+}
+.profile {
+	display: table;
+	margin-bottom: 2%;
+	text-align: center;
+	width: 100%;
+}
+.profile .avatar {
+	display: table-cell;
+	height: auto;
+	width: 200px;
+}
+.profile div {
+	display: table-cell;
+	vertical-align: middle;
 }

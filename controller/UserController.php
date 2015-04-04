@@ -91,32 +91,37 @@
 		/* Show user profile by its username */
 		function profileInfo($idUser){
 			$this->loadModel('User');
+
+			$this->User->createSecondTable('userinfo');
 						
 			$userInfo = $this->User->getUserInfo($idUser);
-			$userInfo['avatar'] = ROOT.DS.'webroot'.DS.'images'.DS.$userInfo['avatar'];
-			echo $userInfo['avatar'];
+			$userInfo['avatar'] = SERVER.'/webroot/images/'.$userInfo['avatar'];
 
 			$this->loadModel('Corpse');
+			require_once 'CorpseController.php';
 
-			//$userInfo['nbFinised'] = count($this->Corpse->getCorpsesFromUser($idUser, 1));
-			//$userInfo['nbOnGoing'] = count($this->Corpse->getCorpsesFromUser($idUser, 0));
-			//$userInfo['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
+			if($userInfo['favoriteCorpse'] != NULL){
+				$userInfo['favoriteCorpse'] = $this->Corpse->getCorpseInfo($userInfo['favoriteCorpse']);
+			}
+
+			$userInfo['nbFinished'] = 2;//count($this->getCorpsesFromUser($idUser, 1));
+			$userInfo['nbOnGoing'] = 3;//count($this->getCorpsesFromUser($idUser, 0));
+			$userInfo['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
 
 			return $userInfo;
 		}
 
 		function profile($idUser){
 			$this->loadModel('User');
-			$user = $this->User->findFirst(array(
-			'conditions'	=> array('idUser'=>$idUser)
-			));
-			if(empty($user)){
-				$this->e404('User introuvable');
-			}
+
+			$user = $this->User->findFirst(array('conditions'	=> array('idUser'=>$idUser)));
+			if(empty($user)) $this->e404('Cet utilisateur est malheureusement introuvable :(');
+
 			$this->set('user', $user);
 
-			$infos = $this->profileInfo($idUser);
-			$this->set('infos', $infos);
+			$profile = $this->profileInfo($idUser);
+
+			$this->set('profile', $profile);
 		}
 
 		function setForm($type){

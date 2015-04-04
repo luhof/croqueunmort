@@ -17,7 +17,7 @@ class User extends Model{
 			$this->db->beginTransaction();
 
 			$registration1 = $this->db->prepare("INSERT INTO $this->table (username) VALUES (:login)");
-			$registration2 = $this->db->prepare("INSERT INTO $this->table2 (email, pwd, create_time, avatar) VALUES (:email, :pwd, CURDATE()), 'niutniut.jpg'");
+			$registration2 = $this->db->prepare("INSERT INTO $this->table2 (email, pwd, create_time) VALUES (:email, :pwd, CURDATE())");
 
 			$registration1->execute(array('login'=>$login));
 			$registration2->execute(array('email'=>$email, 'pwd'=>$password));
@@ -71,8 +71,7 @@ class User extends Model{
 
 	/* Get profile informations by user id */
 	function getUserInfo($idUser){
-		//$info = $this->db->prepare("SELECT avatar, create_time AS 'since', favoriteCorpse FROM $this->table2 WHERE idUser = 16");
-		$info = $this->db->prepare("SELECT avatar, DATE_FORMAT(create_time, '%d/%m/%Y') AS 'since', favoriteCorpse FROM ce_userinfo WHERE idUser = $idUser");
+		$info = $this->db->prepare("SELECT avatar, DATE_FORMAT(since, '%d/%m/%Y') AS 'since', favoriteCorpse FROM $this->table2 WHERE idUser = $idUser");
 		$info->execute(array());
 		$results = $info->fetch(PDO::FETCH_ASSOC);
 
