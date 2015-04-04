@@ -95,14 +95,14 @@ class Corpse extends Model{
 ********************************/
 
 	function insertNewCorpse(){
-		$corpse = $this->db->prepare("INSERT INTO ".$this->table." VALUES (NULL, 0, NULL, NULL, 0, NULL)");
+		$corpse = $this->db->prepare("INSERT INTO ".$this->table." (idCorpse, finished, img, likesCount) VALUES (NULL, 0, 'default.png', 0)");
 		$corpse->execute();
 
 		return $corpse;
 	}
 
 	function insertNewPanel($idCorpse, $step){
-		$panel = $this->db->prepare("INSERT INTO ce_panel VALUES (NULL, $step, 0, $idCorpse, NULL, NULL, NULL");
+		$panel = $this->db->prepare("INSERT INTO ".'ce_panel'." (idCase, step, finished, idCorpse)  VALUES (NULL, $step, 0, $idCorpse)");
 		$panel->execute();
 
 		return $panel;

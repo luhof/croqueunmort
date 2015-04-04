@@ -58,8 +58,22 @@
 			print_r($params);
 			$this->loadModel('Corpse');
 
-			$this->Corpse->insertNewCorpse();
-			//$corpseId = $this->Corpse->db->
+			try{
+				$this->Corpse->insertNewCorpse();
+				$lastId = $this->Corpse->db->lastInsertId();
+				$this->Corpse->insertNewPanel($lastId, 1);
+
+				// WARNING
+				//TODO set value in panel 1
+				//OR set 'Place' in Corpse !
+
+			
+			}
+			catch(Exception $e){
+				echo "erreur : ".$e->getMessage()."<br/>";
+				exit();
+			}
+			
 		}
 
 		/* Separate all ids of users who participed in a corpse*/
