@@ -4,7 +4,7 @@
 
 		function index(){
 			//echo "salut";
-			$this->set('hello', 'hey what\'s up?');
+			//$this->set('hello', 'hey what\'s up?');
 		}
 
 

@@ -12,8 +12,6 @@
 			if($request){
 				$this->request = $request;				
 			}
-
-
 		}
 
 

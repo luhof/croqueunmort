@@ -97,15 +97,28 @@ class Corpse extends Model{
 	function insertNewCorpse(){
 		$corpse = $this->db->prepare("INSERT INTO ".$this->table." (idCorpse, finished, img, likesCount) VALUES (NULL, 0, 'default.png', 0)");
 		$corpse->execute();
-
-		return $corpse;
 	}
 
 	function insertNewPanel($idCorpse, $step){
 		$panel = $this->db->prepare("INSERT INTO ".'ce_panel'." (idCase, step, finished, idCorpse)  VALUES (NULL, $step, 0, $idCorpse)");
 		$panel->execute();
+	}
 
-		return $panel;
+	function setPanelValue($type, $idElem, $idPanel){
+		$type = 'id'.$type;
+		$panel = $this->db->prepare("	UPDATE ce_panel
+										SET $type=$idElem
+										WHERE idCase=$idPanel;"
+									);
+		$panel->execute();
+	}
+
+	function setCorpsePlace($idCorpse, $idPlace){
+		$panel = $this->db->prepare("	UPDATE ce_corpse
+										SET idPlace=$idPlace
+										WHERE idCorpse=$idCorpse;"
+									);
+		$panel->execute();
 	}
 
 

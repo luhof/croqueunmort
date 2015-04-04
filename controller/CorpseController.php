@@ -6,31 +6,33 @@
 
 	class CorpseController extends Controller{
 
-		function continuecorpse(){
-			$this->loadModel('Corpse');
-			$this->Corpse->getRandCorpseId();
-		}
-
 
 		function create(){
 			if(!isset($_SESSION['idUser']) && !isset($_SESSION['username'])){
 				header('location: '.SERVER.DS.'user-login');
 			}
-			$this->createPanel();
+			$this->createPanel(1);
 
 		}
 
-		function createPanel(){
+		function createPanel($step){
 			$this->loadModel('Corpse');
 			//select which element to add (here random)
 			$arrayOfElems = array(
-				'Place',
 				'Character',
 				'Object',
 				'Action'
 				);
 
-			$elemType = $arrayOfElems[rand(0,3)];
+			if($step==1){
+				array_push($arrayOfElems, 'Place');
+			}
+
+			//now is the tricky part -- 
+			//determine WHICH ELEMENTS to random
+			//create a new array with empty elements to fill ? ;)
+			$elemType = $arrayOfElems[rand(0,count($arrayOfElems)-1)];
+
 			//select corresponding stuff (3 random)
 			$elems 	= $this->Corpse->getRandItemId($elemType, 3);
 			//get more info on each element
@@ -43,6 +45,8 @@
 			$this->set('elemType', 	$elemType);
 			$this->set('elems', $elems);
 		}
+
+
 
 		function created(){
 			$params = $this->request->params;
@@ -63,17 +67,34 @@
 				$lastId = $this->Corpse->db->lastInsertId();
 				$this->Corpse->insertNewPanel($lastId, 1);
 
-				// WARNING
-				//TODO set value in panel 1
-				//OR set 'Place' in Corpse !
+
+				if($elemType=='Place'){
+					$this->Corpse->setCorpsePlace($lastId, $id);
+				}
+				else{
+					$this->setPanelValue($elemType, $id, $lastId);
+				}
 
 			
 			}
+
 			catch(Exception $e){
 				echo "erreur : ".$e->getMessage()."<br/>";
 				exit();
 			}
 			
+		}
+
+
+		function continued(){
+
+			//set stuff using $this->request->params
+
+		}
+
+		/* set values to display */
+		function view(){
+
 		}
 
 		/* Separate all ids of users who participed in a corpse*/
