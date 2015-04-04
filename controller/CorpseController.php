@@ -11,26 +11,23 @@
 			if(!isset($_SESSION['idUser']) && !isset($_SESSION['username'])){
 				header('location: '.SERVER.DS.'user-login');
 			}
-			$this->createPanel(1);
-
-		}
-
-		function createPanel($step){
-			$this->loadModel('Corpse');
-			//select which element to add (here random)
 			$arrayOfElems = array(
 				'Character',
 				'Object',
-				'Action'
+				'Action',
+				'Place'
 				);
 
-			if($step==1){
-				array_push($arrayOfElems, 'Place');
-			}
+			$this->updatePanel($arrayOfElems, 1);
 
-			//now is the tricky part -- 
-			//determine WHICH ELEMENTS to random
-			//create a new array with empty elements to fill ? ;)
+		}
+
+		function updatePanel($arrayOfElems, $currPanel){
+			$this->loadModel('Corpse');
+			//select which element to add (here random)
+			
+
+			//now it's random because why not yo
 			$elemType = $arrayOfElems[rand(0,count($arrayOfElems)-1)];
 
 			//select corresponding stuff (3 random)
@@ -44,6 +41,7 @@
 
 			$this->set('elemType', 	$elemType);
 			$this->set('elems', $elems);
+			$this->set('idPanel', $currPanel);
 		}
 
 
@@ -59,7 +57,6 @@
 			$elemType	= $params[0];
 			$id 		= $params[1];
 
-			print_r($params);
 			$this->loadModel('Corpse');
 
 			try{
@@ -72,9 +69,16 @@
 					$this->Corpse->setCorpsePlace($lastId, $id);
 				}
 				else{
-					$this->setPanelValue($elemType, $id, $lastId);
+					$this->Corpse->setPanelValue($elemType, $id, $lastId);
 				}
 
+				if(isset($_SESSION['username'])){
+					$user = $_SESSION['username'];
+				}
+				else $user = "anonyme";
+
+				$this->Corpse->addUserToCorpseBy($user, $lastId);
+				$this->set('idCorpse', $lastId);
 			
 			}
 
@@ -82,13 +86,117 @@
 				echo "erreur : ".$e->getMessage()."<br/>";
 				exit();
 			}
+
+
 			
 		}
 
+		function continuecorpse(){
+			
+			if(isset($this->request->params[0])){
+				$params = $this->request->params;
+				$randId = $params[0];
+			}
+
+			//find a random corpse
+			$this->loadModel('Corpse');
+
+			if(!isset($randId)){
+				$randId = $this->Corpse->getRandCorpseId(false);
+				$randId = $randId['idCorpse'];
+			}
+			
+			$this->set('idRand', $randId);
+			
+
+			if($randId == false){
+				$this->error("Plus de cadavre à continuer !");
+			}
+			
+			//set which step
+			$panels = $this->Corpse->getPanelsByCorpseId($randId);
+
+			$panelsNum = count($panels);
+			$currPanel = $panels[$panelsNum-1];
+
+			$fields = array();
+
+			if($currPanel['idCharacter']==NULL) array_push($fields, 'Character');
+			if($currPanel['idAction']==NULL)	array_push($fields, 'Action');
+			if($currPanel['idObject']==NULL)	array_push($fields, 'Object');
+
+			if(!$this->Corpse->issetPlaceFromCorpse($randId)){
+				array_push($fields, 'Place');
+			}
+
+			$this->updatePanel($fields, $currPanel['idCase']);
+
+
+		}
 
 		function continued(){
+			
+			$this->loadModel('Corpse');
+			$params = $this->request->params;
+			if(count($params)!= 4 || empty($params[0]) || empty($params[1]) || empty($params[2]) || empty($params[3])){
+				$this->eUnauthorized("Petit malin va ;)");
+			}
 
-			//set stuff using $this->request->params
+			$elemType	= $params[0];
+			$idElem 	= $params[1];
+			$idCorpse	= $params[2];
+			$idPanel	= $params[3];
+
+			
+			$this->Corpse->setPanelValue($elemType, $idElem, $idPanel);
+			$finished = $this->isPanelFinished($idPanel, $idCorpse);
+
+			if($finished==true){
+				
+				$this->Corpse->setPanelAsFinished($idPanel);
+
+				$panels = $this->Corpse->getPanelsByCorpseId($idCorpse);
+
+
+				if(count($panels)==3){
+					foreach($panels as $panel){
+						if($panel['finished']==false) $finished = false;
+					}
+				}
+				else{
+					$finished = false;
+					$this->Corpse->insertNewPanel($idCorpse, (count($panels))+1);
+				}
+				
+				if($finished == true){
+					$this->Corpse->setCorpseAsFinished($idCorpse);
+				}
+
+			}
+
+
+
+		}
+
+		function isPanelFinished($idPanel, $idCorpse){
+			echo $idPanel;
+			$this->loadModel('Corpse');
+			$panel = $this->Corpse->getPanelById($idPanel);
+
+			if($panel['idAction']!=NULL && $panel['idCharacter']!=NULL && $panel['idObject']!=NULL){
+				
+				if($panel['step']==1){
+					
+					$issetPlace = $this->Corpse->issetPlaceFromCorpse($idCorpse);
+					if($issetPlace == false) return false;
+
+				}
+
+				return true;
+			}
+
+			return false;
+
 
 		}
 

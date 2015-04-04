@@ -50,6 +50,18 @@
 				$this->vars[$key] = $value;
 			}
 		}
+		
+		function loadControllerByName($name){
+			$file = ROOT.DS.'controller'.DS.$name.'.php';
+			if(file_exists($file)){
+				require_once $file;
+				return new $name($this->request);
+			}
+			else{
+				return false;
+			}
+		}
+
 
 
 		function loadModel($name){
@@ -71,6 +83,13 @@
 		function eUnauthorized($msg){
 			$this->set('msg', $msg);
 			$this->render('/errors/unauthorized');
+
+			die();
+		}
+
+		function error($msg){
+			$this->set('msg', $msg);
+			$this->render('/errors/default');
 
 			die();
 		}

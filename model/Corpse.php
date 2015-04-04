@@ -11,13 +11,57 @@ class Corpse extends Model{
 ********************************/
 
 
-	function getRandCorpseId(){
-			$login = $this->db->prepare("SELECT idCorpse FROM ".$this->table."");
+	function getRandCorpseId($finished){
+
+			if($finished == true)
+				$finished = "WHERE finished=1";
+			else
+				$finished = "WHERE finished=0";
+
+			$login = $this->db->prepare("SELECT idCorpse, idPlace FROM ".$this->table." ".$finished."");
 			$login->execute();
 			$result = $login->fetchAll(PDO::FETCH_ASSOC);
-			echo "un corps au pif : ";
-			print_r($result);
+
+			if($result==NULL) return false;
+
+			$randKey = array_rand($result);
+			
+			return $result[$randKey];
+
 	}
+
+
+	function getPanelsByCorpseId($idCorpse){
+		$panels = $this->db->prepare("SELECT * FROM ce_panel WHERE idCorpse = :idCorpse");
+		$panels->execute(array('idCorpse'=>$idCorpse));
+		$result = $panels->fetchAll(PDO::FETCH_ASSOC);
+
+		return $result;
+	}
+
+
+	function getPanelById($idPanel){
+		$panel = $this->db->prepare("SELECT * FROM ce_panel WHERE idCase = :idPanel");
+		$panel->execute(array('idPanel'=>$idPanel));
+		$result = $panel->fetch(PDO::FETCH_ASSOC);
+
+		return $result;
+	}
+
+	function issetPlaceFromCorpse($idCorpse){
+		$corpse = $this->db->prepare("SELECT idPlace FROM ".$this->table." WHERE idCorpse = :idCorpse");
+		$corpse->execute(array('idCorpse'=>$idCorpse));
+		$result = $corpse->fetch(PDO::FETCH_ASSOC);
+		if($result['idPlace']!=NULL){
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+
 
 	/* returns an array of random items with determined type and size*/
 	function getRandItemId($type, $number){
@@ -95,7 +139,7 @@ class Corpse extends Model{
 ********************************/
 
 	function insertNewCorpse(){
-		$corpse = $this->db->prepare("INSERT INTO ".$this->table." (idCorpse, finished, img, likesCount) VALUES (NULL, 0, 'default.png', 0)");
+		$corpse = $this->db->prepare("INSERT INTO ".$this->table." (idCorpse, finished, img, likesCount, corpse_by) VALUES (NULL, 0, 'default.png', 0, ',')");
 		$corpse->execute();
 	}
 
@@ -113,12 +157,37 @@ class Corpse extends Model{
 		$panel->execute();
 	}
 
+	function addUserToCorpseBy($username, $idCorpse){
+		
+		$panel = $this->db->prepare("	UPDATE $this->table
+										SET corpse_by=concat(corpse_by, '$username,');
+										WHERE idCorpse=$idCorpse;"
+									);
+		$panel->execute();
+	}
+
 	function setCorpsePlace($idCorpse, $idPlace){
 		$panel = $this->db->prepare("	UPDATE ce_corpse
 										SET idPlace=$idPlace
 										WHERE idCorpse=$idCorpse;"
 									);
 		$panel->execute();
+	}
+
+	function setPanelAsFinished($idPanel){
+		$panel = $this->db->prepare("	UPDATE ce_panel
+										SET finished=true
+										WHERE idCase=$idPanel;"
+									);
+		$panel->execute();
+	}
+
+	function setCorpseAsFinished($idCorpse){
+		$corpse = $this->db->prepare("	UPDATE ce_corpse
+										SET finished=true
+										WHERE idCorpse=$idCorpse;"
+									);
+		$corpse->execute();
 	}
 
 
