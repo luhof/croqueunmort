@@ -6,7 +6,9 @@
 		
 		foreach($elems as $element){
 			echo "<div class='elemSelector'>";
-			echo($element['name']);
+			echo "<a href='/croqueunmort/corpse-created-".$elemType."-".$element['id'.$elemType]."'>";
+			echo ($element['name']);
+			echo "</a>";
 			echo "</div>";
 		}
 		?>

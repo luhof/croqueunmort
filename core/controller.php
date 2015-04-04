@@ -70,6 +70,13 @@
 			die();
 		}
 
+		function eUnauthorized($msg){
+			$this->set('msg', $msg);
+			$this->render('/errors/unauthorized');
+
+			die();
+		}
+
 		//appeler un controlleur depuis une vue
 		function request($controller, $action){
 			$controller .= 'Controller';

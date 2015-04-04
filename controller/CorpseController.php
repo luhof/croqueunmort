@@ -44,6 +44,24 @@
 			$this->set('elems', $elems);
 		}
 
+		function created(){
+			$params = $this->request->params;
+
+			//for more security : check if action and id exist !
+			if(count($params)!= 2 || empty($params[0]) || empty($params[1])){
+				$this->eUnauthorized("Petit malin va ;)");
+			}
+
+			$elemType	= $params[0];
+			$id 		= $params[1];
+
+			print_r($params);
+			$this->loadModel('Corpse');
+
+			$this->Corpse->insertNewCorpse();
+			//$corpseId = $this->Corpse->db->
+		}
+
 		/* Separate all ids of users who participed in a corpse*/
 		function separateAuthors($corpse){
 			$authors = explode(",", $corpse['corpse_by']);

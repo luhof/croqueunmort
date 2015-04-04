@@ -2,16 +2,24 @@
 
 class Corpse extends Model{
 
+
+
+/********************************
+*								*
+*			GETTERS 			*
+*								*
+********************************/
+
+
 	function getRandCorpseId(){
 			$login = $this->db->prepare("SELECT idCorpse FROM ".$this->table."");
 			$login->execute();
 			$result = $login->fetchAll(PDO::FETCH_ASSOC);
 			echo "un corps au pif : ";
 			print_r($result);
-		
 	}
 
-
+	/* returns an array of random items with determined type and size*/
 	function getRandItemId($type, $number){
 		$table = "ce_".strtolower($type);
 		$idName = "id".$type;
@@ -19,10 +27,8 @@ class Corpse extends Model{
 		$result = $this->db->prepare("SELECT ".$idName." FROM ".$table);
 		$result->execute();
 		$result = $result->fetchAll(PDO::FETCH_ASSOC);
-		//print_r($result);
+
 		$randKeys = array_rand($result, $number);
-		//$result = array_rand($result, $number);
-		//print_r($randKeys);
 
 		for($i=0; $i<$number; $i++){
 			$resultArr[$i] = $result[$randKeys[$i]];
@@ -81,6 +87,32 @@ class Corpse extends Model{
 		return $result;
 	}
 
+
+/********************************
+*								*
+*			SETTERS 			*
+*								*
+********************************/
+
+	function insertNewCorpse(){
+		$corpse = $this->db->prepare("INSERT INTO ".$this->table." VALUES (NULL, 0, NULL, NULL, 0, NULL)");
+		$corpse->execute();
+
+		return $corpse;
+	}
+
+	function insertNewPanel($idCorpse, $step){
+		$panel = $this->db->prepare("INSERT INTO ce_panel VALUES (NULL, $step, 0, $idCorpse, NULL, NULL, NULL");
+		$panel->execute();
+
+		return $panel;
+	}
+
+
 }
+
+
+
+
 
 ?>
