@@ -33,43 +33,38 @@
 <body>
 
 	<header>
-		<?php
-		  if(!isset($_SESSION['idUser']) && !isset($_SESSION['username']))
-      {
-		?>
+		<div class="right">
+		<?php if(!isset($_SESSION['idUser']) && !isset($_SESSION['username'])){ ?>
 
-		<a class="btn" href="/croqueunmort/user-login"><i class="fa fa-sign-in"></i> S'inscrire/Se connecter</a>
+			<a class="btn" href="/croqueunmort/user-login"><i class="fa fa-sign-in"></i> S'inscrire/Se connecter</a>
 		
-		<?php
-		  }
+		<?php }
+		  else{ ?>
 
-		  else
-      {
-		?>
+			<p>Bienvenue, <a href="<?php echo SERVER.'/user-profile-'.$_SESSION['idUser']; ?>"><?php echo $_SESSION['username']; ?></a> ! </p>
+			<a class="btn" href="/croqueunmort/user-disconnect"><i class="fa fa-sign-out"></i> Se déconnecter</a>
 
-		<span class="btn">Bienvenue, <?php echo $_SESSION['username']; ?> ! <i class="fa fa-sign-out"></i> <a href="/croqueunmort/user-disconnect">Se déconnecter</a></span>
-
-		<?php
-		  }
-		?>
-		<hr />
+		<?php } ?>
+		</div>
 		
-    <h1>
+    	<h1>
 			<span class="title1">Croque un mort</span><br />Cuisinez vos cadavres exquis
 		</h1>
+
+		<hr />
 	</header>
 	
 	<?php $pageName = basename($_SERVER['REQUEST_URI']); ?>
 
 	<nav>
    	<ul>
-			<li <?php if ($pageName == 'croqueunmort') { echo 'class="active-menu"'; } ?>>
+      <li <?php if ($pageName == 'croqueunmort') { echo 'class="active-menu"'; } ?>>
         <a href="/croqueunmort/" title="Accueil">
           <i class="fa fa-home fa-fw"></i>
           <span class="menu">Accueil</span>
         </a>
       </li>
-			<li <?php if ($pageName == 'pages-last') { echo 'class="active-menu"'; } ?>>
+      <li <?php if ($pageName == 'pages-last') { echo 'class="active-menu"'; } ?>>
         <a href="/croqueunmort/pages-last" title="Derniers cadavres">
 					<i class="fa fa-history fa-fw"></i>
           <span class="menu">Derniers cadavres</span>

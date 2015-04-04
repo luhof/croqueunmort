@@ -17,7 +17,7 @@ class User extends Model{
 			$this->db->beginTransaction();
 
 			$registration1 = $this->db->prepare("INSERT INTO $this->table (username) VALUES (:login)");
-			$registration2 = $this->db->prepare("INSERT INTO $this->table2 (email, pwd, create_time) VALUES (:email, :pwd, CURDATE())");
+			$registration2 = $this->db->prepare("INSERT INTO $this->table2 (email, pwd, since) VALUES (:email, :pwd, CURDATE())");
 
 			$registration1->execute(array('login'=>$login));
 			$registration2->execute(array('email'=>$email, 'pwd'=>$password));

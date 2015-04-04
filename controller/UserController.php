@@ -88,39 +88,43 @@
 			
 		}
 
-		/* Show user profile by its username */
-		function profileInfo($idUser){
-			$this->loadModel('User');
-
-			$this->User->createSecondTable('userinfo');
-						
-			$userInfo = $this->User->getUserInfo($idUser);
-			$userInfo['avatar'] = SERVER.'/webroot/images/'.$userInfo['avatar'];
-
-			$this->loadModel('Corpse');
-			require_once 'CorpseController.php';
-
-			if($userInfo['favoriteCorpse'] != NULL){
-				$userInfo['favoriteCorpse'] = $this->Corpse->getCorpseInfo($userInfo['favoriteCorpse']);
-			}
-
-			$userInfo['nbFinished'] = 2;//count($this->getCorpsesFromUser($idUser, 1));
-			$userInfo['nbOnGoing'] = 3;//count($this->getCorpsesFromUser($idUser, 0));
-			$userInfo['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
-
-			return $userInfo;
-		}
-
+		/* Show user profile by its id */
 		function profile($idUser){
 			$this->loadModel('User');
 
+			// Get the username if valide id
 			$user = $this->User->findFirst(array('conditions'	=> array('idUser'=>$idUser)));
-			if(empty($user)) $this->e404('Cet utilisateur est malheureusement introuvable :(');
+			if(empty($user))
+				$this->e404('Cet utilisateur est malheureusement introuvable :(');
+			
+			$this->User->createSecondTable('userinfo');
+			
+			// Get profile informations
+			$profile = $this->User->getUserInfo($idUser);
 
-			$this->set('user', $user);
+			// Make informations pretty
+			$profile['idUser'] = $idUser;
+			$profile['username'] = $user->username;
+			$profile['avatar'] = IMAGES.'avatars/'.$profile['avatar'];
 
-			$profile = $this->profileInfo($idUser);
+			$this->loadModel('Corpse');
 
+			// Get informations about his favorite corpse if exists
+			if($profile['favoriteCorpse'] != 0){
+				$favoriteCorpse = $this->Corpse->getCorpseInfo($profile['favoriteCorpse']);
+				$favoriteCorpse['panel1'] = IMAGES.'panels/'.$favoriteCorpse['panel1'];
+				$favoriteCorpse['panel2'] = IMAGES.'panels/'.$favoriteCorpse['panel2'];
+				$favoriteCorpse['panel3'] = IMAGES.'panels/'.$favoriteCorpse['panel3'];
+
+				$this->set('favoriteCorpse', $favoriteCorpse);
+			}
+
+			// Get statistics about user
+			$profile['nbFinished'] = count($this->getCorpsesFromUser($profile['username'], 1));
+			$profile['nbOnGoing'] = count($this->getCorpsesFromUser($profile['username'], 0));
+			$profile['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
+
+			// Give dat shit to the view
 			$this->set('profile', $profile);
 		}
 
@@ -168,7 +172,26 @@
 			
 		}
 
+		/* Separate all ids of users who participed in a corpse*/
+		function separateAuthors($corpse){
+			$authors = explode(",", $corpse['corpse_by']);
+			return $authors;
+		}
 
+		/* Get the finished or on going corpses a user participated in */
+		function getCorpsesFromUser($username, $finished){
+			$corpses = $this->Corpse->getCorpsesInfo($finished);
+			$corpsesFromUser = array();
+
+			foreach($corpses as $corpse){
+				$corpse['corpse_by'] = $this->separateAuthors($corpse);
+
+				if(in_array($username, $corpse['corpse_by']))
+					array_push($corpsesFromUser, $corpse);
+			}
+
+			return $corpsesFromUser;
+		}
 
 	}
 
