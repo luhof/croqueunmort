@@ -10,7 +10,7 @@ class Corpse extends Model{
 *								*
 ********************************/
 
-
+	/* returns a random id and his place*/
 	function getRandCorpseId($finished){
 
 			if($finished == true)
@@ -105,8 +105,8 @@ class Corpse extends Model{
 	}
 
 	/* Get all informations about a few corpses depending on their status (finished or on going) */
-	function getCorpsesInfo($finished){
-		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = :finished ORDER BY idCorpse DESC");
+	function getCorpsesInfo($finished, $number){
+		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = :finished ORDER BY idCorpse DESC LIMIT $number");
 		$corpsesInfo->execute(array('finished'=>$finished));
 		$result = $corpsesInfo->fetchAll(PDO::FETCH_ASSOC);
 
@@ -124,8 +124,8 @@ class Corpse extends Model{
 
 	/* Get the x more liked corpses */
 	function getBestCorpses($nb){
-		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = true ORDER BY likesCount DESC LIMIT :nb");
-		$corpsesInfo->execute(array('nb'=>$nb));
+		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = true ORDER BY likesCount DESC LIMIT $nb");
+		$corpsesInfo->execute();
 		$result = $corpsesInfo->fetchAll(PDO::FETCH_ASSOC);
 
 		return $result;

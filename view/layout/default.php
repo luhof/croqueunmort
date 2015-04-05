@@ -64,20 +64,20 @@
           <span class="menu">Accueil</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'pages-last') { echo 'class="active-menu"'; } ?>>
-        <a href="/croqueunmort/pages-last" title="Derniers cadavres">
+      <li <?php if ($pageName == 'view-last') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/view-last" title="Derniers cadavres">
 					<i class="fa fa-history fa-fw"></i>
           <span class="menu">Derniers cadavres</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'pages-top') { echo 'class="active-menu"'; } ?>>
-        <a href="/croqueunmort/pages-top" title="La crème">
+      <li <?php if ($pageName == 'view-top') { echo 'class="active-menu"'; } ?>>
+        <a href="/croqueunmort/view-best" title="La crème">
           <i class="fa fa-star fa-fw"></i>
           <span class="menu">La crème</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'random-corpse') { echo 'class="active-menu"'; } ?>>
-        <a href="random-corpse.php" title="Au hasard">
+      <li <?php if ($pageName == 'view-random') { echo 'class="active-menu"'; } ?>>
+        <a href="view-random" title="Au hasard">
           <i class="fa fa-random fa-fw"></i>
           <span class="menu">Au hasard</span>
         </a>

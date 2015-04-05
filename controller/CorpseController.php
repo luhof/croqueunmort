@@ -51,7 +51,7 @@
 
 			//for more security : check if action and id exist !
 			if(count($params)!= 2 || empty($params[0]) || empty($params[1])){
-				$this->eUnauthorized("Petit malin va ;)");
+				$this->error("Petit malin va ;)");
 			}
 
 			$elemType	= $params[0];
@@ -131,7 +131,6 @@
 
 			$this->updatePanel($fields, $currPanel['idCase']);
 
-
 		}
 
 		function continued(){
@@ -147,8 +146,13 @@
 			$idCorpse	= $params[2];
 			$idPanel	= $params[3];
 
-			
-			$this->Corpse->setPanelValue($elemType, $idElem, $idPanel);
+			if($elemType!='Place'){
+				$this->Corpse->setPanelValue($elemType, $idElem, $idPanel);
+			}
+			else{
+				$this->Corpse->setCorpsePlace($idCorpse, $idElem);
+			}
+
 			$finished = $this->isPanelFinished($idPanel, $idCorpse);
 
 			if($finished==true){
@@ -191,41 +195,13 @@
 					if($issetPlace == false) return false;
 
 				}
-
 				return true;
 			}
 
 			return false;
 
-
 		}
 
-		/* set values to display */
-		function view(){
-
-		}
-
-		/* Separate all ids of users who participed in a corpse*/
-		function separateAuthors($corpse){
-			$authors = explode(",", $corpse['corpse_by']);
-			return $authors;
-		}
-
-		/* Get the finished or on going corpses a user participated in */
-		function getCorpsesFromUser($idUser, $finished){
-			$corpses = $this->Corpse->getCorpsesInfo($finished);
-			$corpsesFromUser = array();
-
-			foreach($corpses as $corpse){
-				$corpse['corpse_by'] = separateAuthors($corpse);
-
-				if(in_array($idUser, $corpse[corpse_by])){
-					array_push($corpseFromUser, $corpse);
-				}
-			}
-
-			return $corpsesFromUser;
-		}
 
 	}
 
