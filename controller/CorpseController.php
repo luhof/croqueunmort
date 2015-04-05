@@ -174,16 +174,20 @@
 				
 				if($finished == true){
 					$this->Corpse->setCorpseAsFinished($idCorpse);
+					$this->drawCorpse($idCorpse);
 				}
 
+
+
 			}
+
+header('location: '.SERVER.DS.'corpse-continuecorpse');
 
 
 
 		}
 
 		function isPanelFinished($idPanel, $idCorpse){
-			echo $idPanel;
 			$this->loadModel('Corpse');
 			$panel = $this->Corpse->getPanelById($idPanel);
 
@@ -199,6 +203,34 @@
 			}
 
 			return false;
+
+		}
+
+
+		function drawCorpse($idCorpse){
+			require_once ROOT.DS."utilities".DS."draw.php";
+			$this->loadModel('Corpse');
+			$this->loadModel('Items');
+			/*On met TOUTES LES INFOS dans Panel*/
+			$panels = $this->Corpse->getPanelsByCorpseId($idCorpse);
+			$corpse = $this->Corpse->getCorpseInfo($idCorpse);
+			$idPlace = $corpse['idPlace'];
+
+			$background = $this->Items->getPlaceUrlById($idPlace);
+			createImg($idCorpse);
+			addBackground($idCorpse, $background);
+
+			$tempChar = "charlie.png";
+
+			for($i=0; $i<3; $i++){
+				addCharacter($idCorpse, $i, $tempChar);
+				//addaction
+				//addobject
+			}
+			
+
+			$this->render("index");
+
 
 		}
 
