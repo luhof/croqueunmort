@@ -106,8 +106,15 @@ class Corpse extends Model{
 
 	/* Get all informations about a few corpses depending on their status (finished or on going) */
 	function getCorpsesInfo($finished, $number){
-		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = :finished ORDER BY idCorpse DESC LIMIT $number");
-		$corpsesInfo->execute(array('finished'=>$finished));
+		if(!isset($number) || $number == false){
+			$numberCond = "";
+		}
+		else{
+			$numberCond = "LIMIT $number";
+		}
+
+		$corpsesInfo = $this->db->prepare("SELECT * FROM $this->table WHERE finished = $finished ORDER BY idCorpse DESC $numberCond");
+		$corpsesInfo->execute(array());
 		$result = $corpsesInfo->fetchAll(PDO::FETCH_ASSOC);
 
 		return $result;
@@ -131,6 +138,14 @@ class Corpse extends Model{
 		return $result;
 	}
 
+	function getUsersByCorpse($idCorpse){
+		$users = $this->db->prepare("SELECT corpse_by FROM $this->table WHERE idCorpse = $idCorpse");
+		$users->execute();
+		$result = $users->fetch(PDO::FETCH_ASSOC);
+
+		return $result;
+	}
+
 
 /********************************
 *								*
@@ -140,6 +155,16 @@ class Corpse extends Model{
 
 	function insertNewCorpse(){
 		$corpse = $this->db->prepare("INSERT INTO ".$this->table." (idCorpse, finished, img, likesCount, corpse_by) VALUES (NULL, 0, 'default.png', 0, ',')");
+		$corpse->execute();
+	}
+
+	function setCorpseUrl($idCorpse){
+		$url = "corpse_".$idCorpse.".png";
+		echo $url;
+		$corpse = $this->db->prepare("	UPDATE ce_corpse
+										SET img = '$url' 
+										WHERE idCorpse=$idCorpse;"
+									);
 		$corpse->execute();
 	}
 
@@ -159,9 +184,13 @@ class Corpse extends Model{
 
 	function addUserToCorpseBy($username, $idCorpse){
 		
+		$users = $this->getUsersByCorpse($idCorpse);
+		$users = $users['corpse_by'].$username.",";
+
 		$panel = $this->db->prepare("	UPDATE $this->table
-										SET corpse_by=concat(corpse_by, '$username,');
-										WHERE idCorpse=$idCorpse;"
+										SET corpse_by='$users'
+										WHERE idCorpse=$idCorpse
+										LIMIT 1;"
 									);
 		$panel->execute();
 	}

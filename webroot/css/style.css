@@ -39,6 +39,7 @@ a:hover {
 article {
 	background: #FFFFFF;
 	padding: 3%;
+	box-shadow : 0px 6px 0px rgba(0,0,0,0.1);
 }
 article img {
 	display: inline-block;

@@ -120,8 +120,8 @@
 			}
 
 			// Get statistics about user
-			$profile['nbFinished'] = count($this->getCorpsesFromUser($profile['username'], 1));
-			$profile['nbOnGoing'] = count($this->getCorpsesFromUser($profile['username'], 0));
+			$profile['nbFinished'] = count($this->getCorpsesFromUser($profile['username'], 1, false));
+			$profile['nbOnGoing'] = count($this->getCorpsesFromUser($profile['username'], 0, false));
 			$profile['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
 
 			// Give dat shit to the view
@@ -180,7 +180,7 @@
 
 		/* Get the finished or on going corpses a user participated in */
 		function getCorpsesFromUser($username, $finished){
-			$corpses = $this->Corpse->getCorpsesInfo($finished);
+			$corpses = $this->Corpse->getCorpsesInfo($finished, false);
 			$corpsesFromUser = array();
 
 			foreach($corpses as $corpse){

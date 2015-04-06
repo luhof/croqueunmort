@@ -62,6 +62,8 @@
 			try{
 				$this->Corpse->insertNewCorpse();
 				$lastId = $this->Corpse->db->lastInsertId();
+				
+				$this->Corpse->setCorpseUrl($lastId);
 				$this->Corpse->insertNewPanel($lastId, 1);
 
 
@@ -136,6 +138,11 @@
 		function continued(){
 			
 			$this->loadModel('Corpse');
+
+			if(isset($_SESSION['username']) && !empty($_SESSION['username'])){
+				$user = $_SESSION['username'];
+			}
+
 			$params = $this->request->params;
 			if(count($params)!= 4 || empty($params[0]) || empty($params[1]) || empty($params[2]) || empty($params[3])){
 				$this->eUnauthorized("Petit malin va ;)");
@@ -152,6 +159,8 @@
 			else{
 				$this->Corpse->setCorpsePlace($idCorpse, $idElem);
 			}
+
+			$this->Corpse->addUserToCorpseBy($user, $idCorpse);
 
 			$finished = $this->isPanelFinished($idPanel, $idCorpse);
 

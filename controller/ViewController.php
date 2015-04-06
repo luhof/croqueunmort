@@ -58,6 +58,8 @@
 				$corpse['corpse_by'] = $this->separateAuthors($corpse['corpse_by']);
 			}
 
+
+
 			$this->set('corpseArray', $corpseArray);
 
 		}
@@ -81,7 +83,17 @@
 
 		/* Separate all ids of users who participed in a corpse*/
 		function separateAuthors($corpse){
+			$this->loadModel('User');
 			$authors = explode(",", $corpse);
+			$authors = array_unique($authors);
+			$authors = array_diff($authors, array(NULL));
+			
+			foreach ($authors as &$author){
+				$author = array(
+					'name'	=>$author,
+					'id'	=>$this->User->getIdByUserName($author)
+				);
+			}
 			return $authors;
 		}
 
@@ -93,10 +105,15 @@
 			foreach($corpses as $corpse){
 				$corpse['corpse_by'] = separateAuthors($corpse);
 
-				if(in_array($idUser, $corpse[corpse_by])){
+				if(in_array($idUser, $corpse['corpse_by'])){
 					array_push($corpseFromUser, $corpse);
 				}
 			}
+
+			foreach($corpseArray as &$corpse){
+				$corpse['corpse_by'] = $this->separateAuthors($corpse['corpse_by']);
+			}
+
 
 			return $corpsesFromUser;
 		}

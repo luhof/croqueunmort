@@ -8,11 +8,11 @@
 
 		foreach($corpse_by as $author){
 
-			if($author != " " || $author != ""){
-				echo "<a href='".ROOT.DS."user-profile-".$author."'>";
-				echo $author;
+				echo "<a href='".SERVER.DS."user-profile-".$author['id']."'>";
+				echo $author['name'];
 				echo "</a>";
-			}
+				echo " - ";
+			
 				
 		}
 
