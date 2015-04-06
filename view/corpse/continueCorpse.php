@@ -7,6 +7,7 @@
 		</h2>
 		<p>
 			<?php
+			
 				echo $elemType;
 				echo "<br/>";
 				foreach($elems as $element){

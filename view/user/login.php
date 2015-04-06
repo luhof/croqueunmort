@@ -10,6 +10,15 @@
   		<?php
       		}
       	?>
+
+		<?php
+      		if(isset($this->vars['success'])){
+  		?>
+  		<p class="success"> <?php echo $this->vars['success']; ?></p>
+  		<?php
+      		}
+      	?>
+
         <div class="row-2">
           	<h3 class="title2">Connexion</h3>
           	<form action="user-signin" method="POST">

@@ -193,7 +193,8 @@
 
 			}
 
-header('location: '.SERVER.DS.'corpse-continuecorpse');
+			header('location: '.SERVER.DS.'corpse-continuecorpse');
+			exit();
 
 
 
@@ -255,7 +256,9 @@ header('location: '.SERVER.DS.'corpse-continuecorpse');
 			}
 			
 
-			$this->render("index");
+			//$this->render("index");
+			header('location: '.SERVER.DS.'view-id-'.$idCorpse);
+			exit();
 
 
 		}

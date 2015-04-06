@@ -42,6 +42,8 @@
 			if($correct){
 				$this->User->createSecondTable('userinfo');
 				$this->User->registerUser();
+				$this->set('success', 'Vous êtes bien inscrit ! Vous pouvez vous loguer.');
+				$this->render("login");
 			}
 
 			else{

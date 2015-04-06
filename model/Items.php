@@ -21,11 +21,6 @@ class Items extends Model{
 	}
 
 	function getElemNameById($type, $id){
-		echo "type =";
-		echo $type;
-		echo "id = ";
-		echo $id;
-		echo "<br/>";
 		$table = "ce_".strtolower($type);
 		$idElem = "id".$type;
 		$elem = $this->db->prepare("SELECT url FROM $table WHERE $idElem = $id;
