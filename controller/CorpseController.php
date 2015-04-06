@@ -62,7 +62,7 @@
 			try{
 				$this->Corpse->insertNewCorpse();
 				$lastId = $this->Corpse->db->lastInsertId();
-				
+
 				$this->Corpse->setCorpseUrl($lastId);
 				$this->Corpse->insertNewPanel($lastId, 1);
 
@@ -141,6 +141,9 @@
 
 			if(isset($_SESSION['username']) && !empty($_SESSION['username'])){
 				$user = $_SESSION['username'];
+			}
+			else{
+				$user = "anonyme";
 			}
 
 			$params = $this->request->params;
@@ -228,12 +231,26 @@ header('location: '.SERVER.DS.'corpse-continuecorpse');
 			$background = $this->Items->getPlaceUrlById($idPlace);
 			createImg($idCorpse);
 			addBackground($idCorpse, $background);
+			$panelsId = array();
 
-			$tempChar = "charlie.png";
+			foreach($panels as $panel)
+				array_push($panelsId, $panel['idCase']);
+
+			$elemsId = array();
+			foreach($panelsId as $idPanel)
+				$elems = array_push($elemsId,$this->Items->getElemsIdByPanel($idPanel));
+
+			foreach($elemsId as &$elem){
+				$elem['idCharacter'] = $this->Items->getElemNameById("Character", $elem['idCharacter']);
+				$elem['idObject'] = $this->Items->getElemNameById("Object", $elem['idObject']);
+				$elem['idAction'] = $this->Items->getElemNameById("Action", $elem['idAction']);
+			}
 
 			for($i=0; $i<3; $i++){
-				addCharacter($idCorpse, $i, $tempChar);
-				//addaction
+				//addCharacter($idCorpse, $i, "charlie.png");
+				addElement($idCorpse, $i, "characters", $elemsId[$i]['idCharacter']['url']);
+				addElement($idCorpse, $i, "objects", $elemsId[$i]['idObject']['url']);
+				addElement($idCorpse, $i, "actions", $elemsId[$i]['idAction']['url']);
 				//addobject
 			}
 			

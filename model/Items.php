@@ -7,21 +7,32 @@ class Items extends Model{
 		$place = $this->db->prepare("SELECT * FROM ce_place WHERE idPlace = $idPlace");
 		$place->execute();
 		$result = $place->fetch(PDO::FETCH_ASSOC);
-		print_r($result);
 		return $result['url'];
 	
 	}
 
-	function getCharacterUrlById($idCharacter){
+	function getElemsIdByPanel($idPanel){
+
+		$panel = $this->db->prepare("SELECT idCharacter, idAction, idObject FROM ce_panel WHERE idCase = $idPanel");
+		$panel->execute();
+		$result = $panel->fetch(PDO::FETCH_ASSOC);
+		return $result;
 
 	}
 
-	function getActionUrlById($idAction){
-
-	}
-
-	function getObjectUrlById($idObject){
-
+	function getElemNameById($type, $id){
+		echo "type =";
+		echo $type;
+		echo "id = ";
+		echo $id;
+		echo "<br/>";
+		$table = "ce_".strtolower($type);
+		$idElem = "id".$type;
+		$elem = $this->db->prepare("SELECT url FROM $table WHERE $idElem = $id;
+			");
+		$elem->execute();
+		$result = $elem->fetch(PDO::FETCH_ASSOC);
+		return $result;
 	}
 
 

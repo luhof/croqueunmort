@@ -9,10 +9,13 @@
 
 		foreach($corpse_by as $author){
 
-				echo "<a href='".SERVER.DS."user-profile-".$author['id']."'>";
-				echo $author['name'];
-				echo "</a>";
-				echo " - ";
+					if($author['name']!="anonyme"){
+						echo "<a href='".SERVER.DS."user-profile-".$author['id']."'>";
+						echo $author['name'];
+						echo "</a>";
+						echo " - ";	
+					}
+					else echo "anonyme - ";
 				
 		}
 

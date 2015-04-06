@@ -71,6 +71,27 @@
 		imagedestroy($character);
 	}
 
+	function addElement($idCorpse, $step, $elemType, $elemName){
+		$baseImg = ROOT.DS."webroot".DS."images/corpses/corpse_".$idCorpse.".png";
+		$elemFolder = ROOT.DS."assets".DS."images".DS.$elemType.DS;
+
+		$fullImg = imagecreatetruecolor(660, 215);
+		imagealphablending($fullImg , false); // updated to FALSE
+		imagesavealpha($fullImg , true);
+
+		$img = imagecreatefrompng($baseImg);
+		$elem = imagecreatefrompng($elemFolder.$elemName);
+
+		imagecopy($fullImg, $img, 0, 0, 0, 0, 660, 215);
+		imagecopy($fullImg, $elem, $step*220, 0, 0, 0, 220, 215);
+		//imagecopymerge($img, $character, $step*220, 0, 0, 0, 220, 215, 100);
+		//($img, $character, $step*220, 0, 0, 0, 220, 215);
+
+		imagepng($fullImg, $baseImg);
+		imagedestroy($img);
+		imagedestroy($elem);
+	}
+
 
 	/****
 	* REPETER POUR addcharacters, addaction, addobject 
