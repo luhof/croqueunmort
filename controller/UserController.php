@@ -101,7 +101,6 @@
 			
 			// Get profile informations
 			$profile = $this->User->getUserInfo($idUser);
-
 			// Make informations pretty
 			$profile['idUser'] = $idUser;
 			$profile['username'] = $user->username;
@@ -109,6 +108,10 @@
 
 			$this->loadModel('Corpse');
 
+			//we don't work with panels here bro
+			//need to redo this
+
+			/*
 			// Get informations about his favorite corpse if exists
 			if($profile['favoriteCorpse'] != 0){
 				$favoriteCorpse = $this->Corpse->getCorpseInfo($profile['favoriteCorpse']);
@@ -118,6 +121,7 @@
 
 				$this->set('favoriteCorpse', $favoriteCorpse);
 			}
+			*/
 
 			// Get statistics about user
 			$profile['nbFinished'] = count($this->getCorpsesFromUser($profile['username'], 1, false));

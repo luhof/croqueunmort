@@ -50,27 +50,6 @@
 		imagedestroy($background);
 	}
 
-	function addCharacter($idCorpse, $step, $character){
-		$baseImg = ROOT.DS."webroot".DS."images/corpses/corpse_".$idCorpse.".png";
-		$charactersFolder = ROOT.DS."assets".DS."images".DS."characters".DS;
-
-		$fullImg = imagecreatetruecolor(660, 215);
-		imagealphablending($fullImg , false); // updated to FALSE
-		imagesavealpha($fullImg , true);
-
-		$img = imagecreatefrompng($baseImg);
-		$character = imagecreatefrompng($charactersFolder.$character);
-
-		imagecopy($fullImg, $img, 0, 0, 0, 0, 660, 215);
-		imagecopy($fullImg, $character, $step*220, 0, 0, 0, 220, 215);
-		//imagecopymerge($img, $character, $step*220, 0, 0, 0, 220, 215, 100);
-		//($img, $character, $step*220, 0, 0, 0, 220, 215);
-
-		imagepng($fullImg, $baseImg);
-		imagedestroy($img);
-		imagedestroy($character);
-	}
-
 	function addElement($idCorpse, $step, $elemType, $elemName){
 		$baseImg = ROOT.DS."webroot".DS."images/corpses/corpse_".$idCorpse.".png";
 		$elemFolder = ROOT.DS."assets".DS."images".DS.$elemType.DS;
@@ -93,10 +72,6 @@
 	}
 
 
-	/****
-	* REPETER POUR addcharacters, addaction, addobject 
-	* ou trouver un moyen de tout mettre dans une fonction ? ;)
-	******/
 
 
 	

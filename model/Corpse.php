@@ -160,7 +160,6 @@ class Corpse extends Model{
 
 	function setCorpseUrl($idCorpse){
 		$url = "corpse_".$idCorpse.".png";
-		echo $url;
 		$corpse = $this->db->prepare("	UPDATE ce_corpse
 										SET img = '$url' 
 										WHERE idCorpse=$idCorpse;"
