@@ -6,6 +6,7 @@
 
 	class ViewController extends Controller{
 		
+		
 		/* set values to display */
 		function id($val){
 

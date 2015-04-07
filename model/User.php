@@ -71,7 +71,7 @@ class User extends Model{
 
 	/* Get profile informations by user id */
 	function getUserInfo($idUser){
-		$info = $this->db->prepare("SELECT avatar, since FROM $this->table2 WHERE idUser = $idUser");
+		$info = $this->db->prepare("SELECT avatar, DATE_FORMAT(since, '%d/%m/%Y') AS since FROM $this->table2 WHERE idUser = $idUser");
 		$info->execute(array());
 		$results = $info->fetch(PDO::FETCH_ASSOC);
 
