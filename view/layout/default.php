@@ -8,7 +8,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8"/>
-	<title>Croque Un Mort</title>
+	<title>Croque un mort</title>
 
 
 	<!-- Compatibilité tout écran -->
@@ -58,37 +58,37 @@
 
 	<nav>
    	<ul>
-      <li <?php if ($pageName == 'croqueunmort') { echo 'class="active-menu"'; } ?>>
-        <a href="/croqueunmort/" title="Accueil">
+      <li <?php if ($pageName == 'croqueunmort') echo 'class="active-menu"'; ?>>
+        <a href="<?php echo SERVER; ?>" title="Accueil">
           <i class="fa fa-home fa-fw"></i>
           <span class="menu">Accueil</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'pages-last') { echo 'class="active-menu"'; } ?>>
-        <a href="/croqueunmort/pages-last" title="Derniers cadavres">
+      <li <?php if ($pageName == 'pages-last') echo 'class="active-menu"'; ?>>
+        <a href="<?php echo SERVER.'/pages-last'; ?>" title="Derniers cadavres">
 					<i class="fa fa-history fa-fw"></i>
           <span class="menu">Derniers cadavres</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'pages-top') { echo 'class="active-menu"'; } ?>>
+      <li <?php if ($pageName == 'pages-top') echo 'class="active-menu"'; ?>>
         <a href="/croqueunmort/pages-top" title="La crème">
           <i class="fa fa-star fa-fw"></i>
           <span class="menu">La crème</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'random-corpse') { echo 'class="active-menu"'; } ?>>
+      <li <?php if ($pageName == 'random-corpse') echo 'class="active-menu"'; ?>>
         <a href="random-corpse.php" title="Au hasard">
           <i class="fa fa-random fa-fw"></i>
           <span class="menu">Au hasard</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'corpse-create') { echo 'class="active-menu"'; } ?>>
+      <li <?php if ($pageName == 'corpse-create') echo 'class="active-menu"'; ?>>
         <a href="/croqueunmort/corpse-create" title="Entamer un cadavre">
 					<i class="fa fa-comment fa-fw"></i>
           <span class="menu">Entamer un cadavre</span>
         </a>
       </li>
-      <li <?php if ($pageName == 'corpse-continuecorpse') { echo 'class="active-menu"'; } ?>>
+      <li <?php if ($pageName == 'corpse-continuecorpse') echo 'class="active-menu"'; ?>>
         <a href="/croqueunmort/corpse-continuecorpse" title="En continuer un">
           <i class="fa fa-comments-o fa-fw"></i>
           <span class="menu">En continuer un</span>

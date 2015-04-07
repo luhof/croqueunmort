@@ -53,7 +53,7 @@ class User extends Model{
 			//session_start();
 			$_SESSION['idUser'] = $result['idUser'];
 			$_SESSION['username'] = $result['username'];
-			header('location: '.SERVER.DS.'');
+			header('location: '.SERVER);
 		}
 
 		else return "password";
