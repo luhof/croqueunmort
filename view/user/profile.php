@@ -51,7 +51,7 @@
     </article>
   </section>
 
-  <?php if($profile['favoriteCorpse'] != 0){ ?>
+  <?php if(isset($profile['favoriteCorpse']) && $profile['favoriteCorpse'] != 0){ ?>
   <section>
     <h2 class="title1"><i class="fa fa-heart"></i> Son cadavre préféré de chez préféré</h2>
     <article>

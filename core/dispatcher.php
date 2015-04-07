@@ -13,7 +13,6 @@ class Dispatcher{
 		}
 
 		$controller = $this->loadController();
-		//echo $this->request->action;
 
 		if(!in_array($this->request->action, get_class_methods($controller))){
 			$this->error('Controller missing function "'.$this->request->action.'"');

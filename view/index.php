@@ -31,6 +31,7 @@
     </article>
   </section>
 
+  <!--
   <section>
     <h2 class="title1"><i class="fa fa-history"></i> Dernier cadavre</h2>
     <article>
@@ -50,6 +51,8 @@
       <p>Ajouter à mes favoris</p>
     </article>
   </section>
+
+  -->
 	
   <section>
     <h2 class="title1"><i class="fa fa-gamepad"></i> Comment jouer</h2>

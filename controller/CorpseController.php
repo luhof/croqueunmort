@@ -51,7 +51,7 @@
 
 			//for more security : check if action and id exist !
 			if(count($params)!= 2 || empty($params[0]) || empty($params[1])){
-				$this->eUnauthorized("Petit malin va ;)");
+				$this->error("Petit malin va ;)");
 			}
 
 			$elemType	= $params[0];
@@ -62,6 +62,8 @@
 			try{
 				$this->Corpse->insertNewCorpse();
 				$lastId = $this->Corpse->db->lastInsertId();
+
+				$this->Corpse->setCorpseUrl($lastId);
 				$this->Corpse->insertNewPanel($lastId, 1);
 
 
@@ -131,12 +133,19 @@
 
 			$this->updatePanel($fields, $currPanel['idCase']);
 
-
 		}
 
 		function continued(){
 			
 			$this->loadModel('Corpse');
+
+			if(isset($_SESSION['username']) && !empty($_SESSION['username'])){
+				$user = $_SESSION['username'];
+			}
+			else{
+				$user = "anonyme";
+			}
+
 			$params = $this->request->params;
 			if(count($params)!= 4 || empty($params[0]) || empty($params[1]) || empty($params[2]) || empty($params[3])){
 				$this->eUnauthorized("Petit malin va ;)");
@@ -147,8 +156,15 @@
 			$idCorpse	= $params[2];
 			$idPanel	= $params[3];
 
-			
-			$this->Corpse->setPanelValue($elemType, $idElem, $idPanel);
+			if($elemType!='Place'){
+				$this->Corpse->setPanelValue($elemType, $idElem, $idPanel);
+			}
+			else{
+				$this->Corpse->setCorpsePlace($idCorpse, $idElem);
+			}
+
+			$this->Corpse->addUserToCorpseBy($user, $idCorpse);
+
 			$finished = $this->isPanelFinished($idPanel, $idCorpse);
 
 			if($finished==true){
@@ -170,16 +186,21 @@
 				
 				if($finished == true){
 					$this->Corpse->setCorpseAsFinished($idCorpse);
+					$this->drawCorpse($idCorpse);
 				}
 
+
+
 			}
+
+			header('location: '.SERVER.DS.'corpse-continuecorpse');
+			exit();
 
 
 
 		}
 
 		function isPanelFinished($idPanel, $idCorpse){
-			echo $idPanel;
 			$this->loadModel('Corpse');
 			$panel = $this->Corpse->getPanelById($idPanel);
 
@@ -191,41 +212,57 @@
 					if($issetPlace == false) return false;
 
 				}
-
 				return true;
 			}
 
 			return false;
 
-
 		}
 
-		/* set values to display */
-		function view(){
 
-		}
+		function drawCorpse($idCorpse){
+			require_once ROOT.DS."utilities".DS."draw.php";
+			$this->loadModel('Corpse');
+			$this->loadModel('Items');
+			/*On met TOUTES LES INFOS dans Panel*/
+			$panels = $this->Corpse->getPanelsByCorpseId($idCorpse);
+			$corpse = $this->Corpse->getCorpseInfo($idCorpse);
+			$idPlace = $corpse['idPlace'];
 
-		/* Separate all ids of users who participed in a corpse*/
-		function separateAuthors($corpse){
-			$authors = explode(",", $corpse['corpse_by']);
-			return $authors;
-		}
+			$background = $this->Items->getPlaceUrlById($idPlace);
+			createImg($idCorpse);
+			addBackground($idCorpse, $background);
+			$panelsId = array();
 
-		/* Get the finished or on going corpses a user participated in */
-		function getCorpsesFromUser($idUser, $finished){
-			$corpses = $this->Corpse->getCorpsesInfo($finished);
-			$corpsesFromUser = array();
+			foreach($panels as $panel)
+				array_push($panelsId, $panel['idCase']);
 
-			foreach($corpses as $corpse){
-				$corpse['corpse_by'] = separateAuthors($corpse);
+			$elemsId = array();
+			foreach($panelsId as $idPanel)
+				$elems = array_push($elemsId,$this->Items->getElemsIdByPanel($idPanel));
 
-				if(in_array($idUser, $corpse[corpse_by])){
-					array_push($corpseFromUser, $corpse);
-				}
+			foreach($elemsId as &$elem){
+				$elem['idCharacter'] = $this->Items->getElemNameById("Character", $elem['idCharacter']);
+				$elem['idObject'] = $this->Items->getElemNameById("Object", $elem['idObject']);
+				$elem['idAction'] = $this->Items->getElemNameById("Action", $elem['idAction']);
 			}
 
-			return $corpsesFromUser;
+			for($i=0; $i<3; $i++){
+				//addCharacter($idCorpse, $i, "charlie.png");
+				addElement($idCorpse, $i, "characters", $elemsId[$i]['idCharacter']['url']);
+				addElement($idCorpse, $i, "objects", $elemsId[$i]['idObject']['url']);
+				addElement($idCorpse, $i, "actions", $elemsId[$i]['idAction']['url']);
+				//addobject
+			}
+			
+
+			//$this->render("index");
+			header('location: '.SERVER.DS.'view-id-'.$idCorpse);
+			exit();
+
+
 		}
+
 
 	}
 

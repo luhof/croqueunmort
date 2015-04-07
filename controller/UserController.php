@@ -42,6 +42,8 @@
 			if($correct){
 				$this->User->createSecondTable('userinfo');
 				$this->User->registerUser();
+				$this->set('success', 'Vous êtes bien inscrit ! Vous pouvez vous loguer.');
+				$this->render("login");
 			}
 
 			else{
@@ -101,7 +103,6 @@
 			
 			// Get profile informations
 			$profile = $this->User->getUserInfo($idUser);
-
 			// Make informations pretty
 			$profile['idUser'] = $idUser;
 			$profile['username'] = $user->username;
@@ -109,6 +110,10 @@
 
 			$this->loadModel('Corpse');
 
+			//we don't work with panels here bro
+			//need to redo this
+
+			/*
 			// Get informations about his favorite corpse if exists
 			if($profile['favoriteCorpse'] != 0){
 				$favoriteCorpse = $this->Corpse->getCorpseInfo($profile['favoriteCorpse']);
@@ -118,10 +123,11 @@
 
 				$this->set('favoriteCorpse', $favoriteCorpse);
 			}
+			*/
 
 			// Get statistics about user
-			$profile['nbFinished'] = count($this->getCorpsesFromUser($profile['username'], 1));
-			$profile['nbOnGoing'] = count($this->getCorpsesFromUser($profile['username'], 0));
+			$profile['nbFinished'] = count($this->getCorpsesFromUser($profile['username'], 1, false));
+			$profile['nbOnGoing'] = count($this->getCorpsesFromUser($profile['username'], 0, false));
 			$profile['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
 
 			// Give dat shit to the view
@@ -180,7 +186,7 @@
 
 		/* Get the finished or on going corpses a user participated in */
 		function getCorpsesFromUser($username, $finished){
-			$corpses = $this->Corpse->getCorpsesInfo($finished);
+			$corpses = $this->Corpse->getCorpsesInfo($finished, false);
 			$corpsesFromUser = array();
 
 			foreach($corpses as $corpse){
