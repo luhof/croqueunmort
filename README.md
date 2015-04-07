@@ -17,9 +17,10 @@
 
 ### done
 
-base MVC
+yes
 
 ### todo
 <p>
-die from exhaustion
+- die from exhaustion
+- like system
 </p>
