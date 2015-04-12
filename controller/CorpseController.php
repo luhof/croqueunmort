@@ -88,8 +88,6 @@
 				echo "erreur : ".$e->getMessage()."<br/>";
 				exit();
 			}
-
-
 			
 		}
 
@@ -260,6 +258,15 @@
 			header('location: '.SERVER.DS.'view-id-'.$idCorpse);
 			exit();
 
+
+		}
+
+		function addLike($idCorpse){
+
+			if(!isset($_SESSION['idUser']) || !isset($_SESSION['username'])){
+				header('location: '.SERVER.DS.'user-login');
+				exit();
+			}
 
 		}
 
