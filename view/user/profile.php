@@ -51,6 +51,41 @@
     </article>
   </section>
 
+  <section>
+    <h3 class="title2">Cadavres auxquels <?php echo($profile['username']); ?> a participé</h3>
+    <?php
+    foreach($profile['corpses'] as $corpse){
+      echo "<article>";
+      echo "<h2>Cadavre ID#".$corpse['idCorpse']."</h2>";
+      echo "<img src='./images/corpses/".$corpse['img']."' alt='corpse'/>";
+      foreach($corpse['corpse_by'] as $author){
+          if($author['name']!="anonyme"){
+            echo "<a href='".SERVER.DS."user-profile-".$author['id']."'>";
+            echo $author['name'];
+            echo "</a>";
+            echo " - "; 
+          }
+          else echo "anonyme - ";
+              
+      }
+      echo "</article>";
+
+      
+      //now behold the best line of php ever:
+      echo "<br/><br/>";
+      //wow it really was something heh ?
+    }
+      
+
+
+
+
+
+    
+    
+    ?>
+  </section>
+
   <?php if(isset($profile['favoriteCorpse']) && $profile['favoriteCorpse'] != 0){ ?>
   <section>
     <h2 class="title1"><i class="fa fa-heart"></i> Son cadavre préféré de chez préféré</h2>

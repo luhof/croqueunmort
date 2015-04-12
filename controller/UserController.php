@@ -129,9 +129,17 @@
 			$profile['nbFinished'] = count($this->getCorpsesFromUser($profile['username'], 1, false));
 			$profile['nbOnGoing'] = count($this->getCorpsesFromUser($profile['username'], 0, false));
 			$profile['nbFavorite'] = count($this->Corpse->getFavoriteCorpses($idUser));
+			
+			$profile['corpses'] = $this->getCorpsesFromUser($profile['username'], 1, false);
+			//print_r($profile['corpses']);
 
+			//foreach($profile['corpses'] as $corpse){
+				//print_r($corpse);
+				//$corpse['corpse_by'] = $this->separateAuthors($corpse['corpse_by']);
+			//}
 			// Give dat shit to the view
 			$this->set('profile', $profile);
+
 		}
 
 		function setForm($type){
@@ -180,7 +188,18 @@
 
 		/* Separate all ids of users who participed in a corpse*/
 		function separateAuthors($corpse){
-			$authors = explode(",", $corpse['corpse_by']);
+			$this->loadModel('User');
+			$authors = explode(",", $corpse);
+			$authors = array_unique($authors);
+			$authors = array_diff($authors, array(NULL));
+			
+			foreach ($authors as &$author){
+				$author = array(
+					'name'	=>$author,
+					'id'	=>$this->User->getIdByUserName($author)
+				);
+			}
+			//print_r($authors);
 			return $authors;
 		}
 
@@ -188,13 +207,20 @@
 		function getCorpsesFromUser($username, $finished){
 			$corpses = $this->Corpse->getCorpsesInfo($finished, false);
 			$corpsesFromUser = array();
-
+			
 			foreach($corpses as $corpse){
-				$corpse['corpse_by'] = $this->separateAuthors($corpse);
-
-				if(in_array($username, $corpse['corpse_by']))
-					array_push($corpsesFromUser, $corpse);
+				$corpse_by_names = array();
+				$corpse['corpse_by'] = $this->separateAuthors($corpse['corpse_by']);
+				foreach($corpse['corpse_by'] as $corpseBy){
+					array_push($corpse_by_names, $corpseBy['name']);
+				}
+				if(in_array($username, $corpse_by_names))
+				array_push($corpsesFromUser, $corpse);
+				
+				
+				
 			}
+		
 
 			return $corpsesFromUser;
 		}
