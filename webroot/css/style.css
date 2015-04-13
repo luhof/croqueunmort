@@ -163,33 +163,6 @@ nav .fa {
 }
 
 
-
-/* Tableaux */
-/*table {
-	width: 100%;
-}
-.blue-table th {
-	background-color: #18B3A3;
-	color: #FFFFFF;
-	padding: 1%;
-	text-align: center;
-}
-tr {
-	border-right: 2px solid #E9E7E7;
-}
-tr:last-child {
-	border-bottom: 2px solid #E9E7E7;
-}
-tr:nth-child(2n+1) {
-	background-color: #E9E7E7;
-}
-td {
-	padding: 1%;
-	text-align: right;
-}*/
-
-
-
 /* Forms */
 input[type="text"], input[type="password"], input[type="email"], input[type="file"] {
 	background: #E9E7E7;
@@ -275,4 +248,7 @@ input[type="submit"]:hover {
 		right: 0;
 	margin: 0.5%;
 	text-align: right;
+}
+.avtr {
+	max-width: 200px;
 }

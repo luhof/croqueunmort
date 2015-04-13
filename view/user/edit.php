@@ -21,11 +21,10 @@
       <div class="rows">
 
         <div class="row-2 center">
-          	<img src="<?php echo ($profile['avatar']); ?>" alt="Avatar de <?php echo($_SESSION['username']); ?>" />
-          	<i class="fa fa-child fa-5x"></i>
+          <img class="avtr" src="<?php echo ($profile['avatar']); ?>" alt="Avatar de <?php echo($_SESSION['username']); ?>" /><br />
+          <i class="fa fa-child fa-5x"></i>
           <h3 class="title2"><?php echo($_SESSION['username']); ?></h3>
           <p>E-mail actuel : <?php echo($profile['email']); ?></p>
-
         </div>
 
         <div class="row-2">

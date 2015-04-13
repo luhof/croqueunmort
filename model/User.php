@@ -86,9 +86,9 @@ class User extends Model{
 
 	/* Get a user's password */
 	function getPassword($idUser){
-		$pwd = $this->db->prepare("SELECT pwd FROM $this->table WHERE idUser = :idUser");
-		$login->execute(array('idUser'=>$idUser));
-		$result = $login->fetch(PDO::FETCH_NUM);
+		$pwd = $this->db->prepare("SELECT pwd FROM $this->table2 WHERE idUser = :idUser");
+		$pwd->execute(array('idUser'=>$idUser));
+		$result = $pwd->fetch(PDO::FETCH_NUM);
 
 		return $result[0];
 	}

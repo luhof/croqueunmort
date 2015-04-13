@@ -148,6 +148,8 @@
 			
 			$this->loadModel('User');
 			$this->User->createSecondTable('userinfo');
+
+			// Show some profile informations
 			$profile = $this->User->getUserInfo($_SESSION['idUser']);
 			$profile['avatar'] = IMAGES.'avatars/'.$profile['avatar'];
 			$this->set('profile', $profile);
@@ -155,10 +157,11 @@
 			// In case of validation of form
 			if(isset($_POST["edit"])){
 
-				/*if(empty($_POST['avatar']) && empty($_POST['currentPassword']) && empty($_POST['password']) && empty($_POST['passwordConfirm']) && empty($_POST['e-mail'])){
-					$correct = false;
-					$this->set('error', 'Si on veut modifier son profil, il faudrait peut-être spéficier ce que l\'on veut changer...');
-				}*/
+				if($_FILES['avatar']['error'] == 4 && empty($_POST['currentPassword']) && empty($_POST['password']) && empty($_POST['passwordConfirm']) && empty($_POST['e-mail'])){
+					$this->set('error', 'Si on veut modifier son profil, il faudrait peut-être spéficier ce que l\'on veut modifier...');
+					return;
+				}
+
 
 				// New avatar
 				if($_FILES['avatar']['error'] == 0){
@@ -184,16 +187,17 @@
 						$this->User->editProfile($_SESSION['idUser'], "avatar", 'avatar-'.$_SESSION['idUser']);
 				}
 				// Transfer error
-				/*else if($_FILES['avatar']['error']){
+				else if($_FILES['avatar']['error'] != 0 && $_FILES['avatar']['error'] != 4){
 					$this->set('error', 'Il y a eu une erreur lors du transfert, ainsi va la vie.');
 					return;
-				}*/
+				}
+
 
 				// New password
 				if(!empty($_POST['currentPassword']) && !empty($_POST['password']) && !empty($_POST['passwordConfirm'])){
 					// Wrong confirmation
-					if($correct == true && (($_POST['password'] != $_POST['passwordConfirm']))){
-						$this->set('error', 'Le nouveau mot de passe et la confirmation ne correspondent pas !');
+					if($_POST['password'] != $_POST['passwordConfirm']){
+						$this->set('error', 'Le nouveau mot de passe et la confirmation ne correspondent pas loulou.');
 						return;
 					}
 
@@ -206,14 +210,20 @@
 					}
 
 					// Alright
-					$newPassword = md5($_POST['currentPassword']."ichbindusel");
+					$newPassword = md5($_POST['password']."ichbindusel");
 					$this->User->editProfile($_SESSION['idUser'], "pwd", $newPassword);
 				}
-				// Empty password field
-				else{
+				// Empty password field (here comes the biggest test EVER youhou)
+				else if((!empty($_POST['currentPassword']) && empty($_POST['password']) && empty($_POST['passwordConfirm'])) ||
+					(!empty($_POST['currentPassword']) && !empty($_POST['password']) && empty($_POST['passwordConfirm'])) ||
+					(!empty($_POST['currentPassword']) && empty($_POST['password']) && !empty($_POST['passwordConfirm'])) ||
+					(empty($_POST['currentPassword']) && !empty($_POST['password']) && !empty($_POST['passwordConfirm'])) ||
+					(empty($_POST['currentPassword']) && !empty($_POST['password']) && empty($_POST['passwordConfirm'])) ||
+					(empty($_POST['currentPassword']) && empty($_POST['password']) && !empty($_POST['passwordConfirm']))){
 					$this->set('error', 'Il faut remplir tous les champs relatifs au mot de passe pour pouvoir en changer.');
 					return;
 				}
+
 
 				// New e-mail
 				if(!empty($_POST['e-mail'])){
@@ -227,22 +237,13 @@
 				// Success message
 				$this->set('success', 'Votre profil a bien été modifié \o');
 			}
+
+			// Show some profile informations
+			$profile = $this->User->getUserInfo($_SESSION['idUser']);
+			$profile['avatar'] = IMAGES.'avatars/'.$profile['avatar'];
+			$this->set('profile', $profile);
 		}
 
-
-		function editProfile(){
-
-			/*
-
-			
-			}*/
-
-			
-
-			
-
-			$this->render("edit");
-		}
 
 		function setForm($type){
 
