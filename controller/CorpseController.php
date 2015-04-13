@@ -268,6 +268,37 @@
 				exit();
 			}
 
+			$idUser = $_SESSION['idUser'];
+			$params = $this->request->params;
+
+			if(count($params)!= 1 || empty($params[0])){
+				$this->error("Petit malin va ;)");
+			}
+			
+			$idCorpse = $params[0];
+
+			$this->loadModel('Corpse');
+			
+			$hasLiked = $this->Corpse->hasUserLikedPost($idUser, $idCorpse);
+			
+			if(!$hasLiked){
+				$this->Corpse->addLike($idUser, $idCorpse);
+				header('location: '.SERVER.DS.'view-id-'.$idCorpse);
+			}
+
+			else{
+				header('location: '.SERVER.DS.'view-id-'.$idCorpse);
+				//echo "he has liked yet ";
+			}
+
+
+
+
+
+			exit();
+
+			
+
 		}
 
 

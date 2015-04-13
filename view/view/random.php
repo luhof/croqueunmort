@@ -24,7 +24,11 @@
 
 		</p>
 
-		<p> bouton like ici </p>
+		<?php
+
+				echo "<p>".$likesCount." Likes <a href='".SERVER.'/corpse-addLike-'.$idCorpse."'>Like !</p>";
+
+		?>
 		
 	</article>
 </section>

@@ -146,6 +146,17 @@ class Corpse extends Model{
 		return $result;
 	}
 
+	function hasUserLikedPost($idUser, $idCorpse){
+		$user = $this->db->prepare("SELECT * FROM ce_likes WHERE idUser = $idUser AND idCorpse = $idCorpse");
+		$user->execute();
+		$user = $user->fetch(PDO::FETCH_ASSOC);
+
+		if($user == NULL || empty($user)){
+			return 0;
+		}
+
+		return 1;
+	}
 
 /********************************
 *								*
@@ -216,6 +227,36 @@ class Corpse extends Model{
 										WHERE idCorpse=$idCorpse;"
 									);
 		$corpse->execute();
+	}
+
+	function addLike($idUser, $idCorpse){
+
+
+
+		try{
+			$this->db->beginTransaction();
+
+			$like = $this->db->prepare("INSERT INTO ".'ce_likes'." (idUser, idCorpse)  VALUES ($idUser, $idCorpse)");
+
+			$likesCount = $this->db->prepare("	UPDATE ce_corpse
+												SET likesCount=likesCount+1
+												WHERE idCorpse=$idCorpse;"
+											);
+
+			
+			$like->execute();
+			$likesCount->execute();
+
+			$this->db->commit();
+		}
+
+		catch(Exception $e){
+			$db->rollback();
+			echo "erreur : ".$e->getMessage()."<br/>";
+			exit();
+		}
+
+		return true;
 	}
 
 

@@ -13,7 +13,7 @@
 
 			foreach($corpse['corpse_by'] as $author){
 					if($author['name']!="anonyme"){
-						echo "<a href='".SERVER.DS."user-profile-".$author['id']."'>";
+						echo "<a href='".SERVER."/user-profile-".$author['id']."'>";
 						echo $author['name'];
 						echo "</a>";
 						echo " - ";	
@@ -24,7 +24,13 @@
 			?>
 
 			</p>
-			<p> bouton like ici </p>
+
+			<?php
+
+				echo "<p>".$corpse['likesCount']." Likes <a href='".SERVER.'/corpse-addLike-'.$corpse['idCorpse']."'>Like !</p>";
+
+			?>
+
 		</article>
 	</section>
 	<?php
