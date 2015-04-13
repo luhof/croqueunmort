@@ -142,6 +142,108 @@
 
 		}
 
+		function edit(){
+			if(!isset($_SESSION['idUser']) && !isset($_SESSION['username']))
+				$this->e404('Cette page ne vous est pas accessible, arrêtez d\'essayer de créer un bug dans la matrice è_é');
+			
+			$this->loadModel('User');
+			$this->User->createSecondTable('userinfo');
+			$profile = $this->User->getUserInfo($_SESSION['idUser']);
+			$profile['avatar'] = IMAGES.'avatars/'.$profile['avatar'];
+			$this->set('profile', $profile);
+
+			// In case of validation of form
+			if(isset($_POST["edit"])){
+
+				/*if(empty($_POST['avatar']) && empty($_POST['currentPassword']) && empty($_POST['password']) && empty($_POST['passwordConfirm']) && empty($_POST['e-mail'])){
+					$correct = false;
+					$this->set('error', 'Si on veut modifier son profil, il faudrait peut-être spéficier ce que l\'on veut changer...');
+				}*/
+
+				// New avatar
+				if($_FILES['avatar']['error'] == 0){
+
+					// Extension test
+					$validExtensions = array('jpg', 'jpeg', 'gif', 'png');
+					$uploadedExtension = strtolower(substr(strrchr($_FILES['avatar']['name'], '.'), 1));
+					if (!in_array($uploadedExtension, $validExtensions)){
+						$this->set('error', 'Les extensions valides pour un avatar sont .jpg, .jpeg, .gif, .png (vous devriez le savoir quand même hein).');
+						return;
+					}
+					
+					// Size test
+					$avatarSize = getimagesize($_FILES['avatar']['tmp_name']);
+					if ($avatarSize[0] > 200 || $avatarSize[1] > 200){
+						$this->set('error', 'L\'avatar est trop grand, il doit faire au maximum 200*200 pixels.');
+						return;
+					}
+
+					// Alright
+					$avatar = WEBROOT.DS.'images'.DS.'avatars'.DS.'avatar-'.$_SESSION['idUser'];
+					if(move_uploaded_file($_FILES['avatar']['tmp_name'], $avatar))
+						$this->User->editProfile($_SESSION['idUser'], "avatar", 'avatar-'.$_SESSION['idUser']);
+				}
+				// Transfer error
+				/*else if($_FILES['avatar']['error']){
+					$this->set('error', 'Il y a eu une erreur lors du transfert, ainsi va la vie.');
+					return;
+				}*/
+
+				// New password
+				if(!empty($_POST['currentPassword']) && !empty($_POST['password']) && !empty($_POST['passwordConfirm'])){
+					// Wrong confirmation
+					if($correct == true && (($_POST['password'] != $_POST['passwordConfirm']))){
+						$this->set('error', 'Le nouveau mot de passe et la confirmation ne correspondent pas !');
+						return;
+					}
+
+					// Wrong old password
+					$givenPassword = md5($_POST['currentPassword']."ichbindusel");
+					$currentPassword = $this->User->getPassword($_SESSION['idUser']);
+					if($givenPassword != $currentPassword){
+						$this->set('error', 'Le mot de passe actuel n\'est pas le bon !');
+						return;
+					}
+
+					// Alright
+					$newPassword = md5($_POST['currentPassword']."ichbindusel");
+					$this->User->editProfile($_SESSION['idUser'], "pwd", $newPassword);
+				}
+				// Empty password field
+				else{
+					$this->set('error', 'Il faut remplir tous les champs relatifs au mot de passe pour pouvoir en changer.');
+					return;
+				}
+
+				// New e-mail
+				if(!empty($_POST['e-mail'])){
+					if(!filter_var($_POST['e-mail'], FILTER_VALIDATE_EMAIL)){
+    					$this->set('error', 'L\'e-mail entré n\'est pas valide');
+    					return;
+    				}
+    				$this->User->editProfile($_SESSION['idUser'], "email", $_POST['e-mail']);
+				}
+
+				// Success message
+				$this->set('success', 'Votre profil a bien été modifié \o');
+			}
+		}
+
+
+		function editProfile(){
+
+			/*
+
+			
+			}*/
+
+			
+
+			
+
+			$this->render("edit");
+		}
+
 		function setForm($type){
 
 			switch($type){
@@ -155,7 +257,7 @@
 						"label"	=>	'Mot de Passe',
 						"name" => "password",			"type"	=> "password"),
 					array(
-						"label"	=>	'Confirmez le Mot de Passe',
+						"label"	=>	'Confirmez le mot de passe',
 						"name" => "passwordConfirm",	"type"	=> "password"),
 					array(
 						"label"	=>	'Adresse e-mail',
@@ -172,11 +274,34 @@
 						"label"	=> 'Nom d\'utilisateur',
 						"name" => "login",			"type"	=> "text"),
 					array(
-						"label"	=>	'Mot de Passe',
+						"label"	=>	'Mot de passe',
 						"name" => "password",			"type"	=> "password"),
 					array(
 						"label"	=>	'',
 						"name" => "",			"type"	=> "submit"),
+					);
+					break;
+
+				case "edit":
+					$params = array(	
+					array(
+						"label"	=> 'Nouvel avatar (200*200 px)',
+						"name" => "avatar",			"type"	=> "file"),
+					array(
+						"label"	=>	'Mot de passe actuel',
+						"name" => "currentPassword",			"type"	=> "password"),
+					array(
+						"label"	=>	'Nouveau mot de passe',
+						"name" => "password",			"type"	=> "password"),
+					array(
+						"label"	=>	'Confirmez le nouveau mot de passe',
+						"name" => "passwordConfirm",	"type"	=> "password"),
+					array(
+						"label"	=>	'Nouvelle adresse e-mail',
+						"name" => "e-mail",			"type"	=> "email"),
+					array(
+						"label"	=>	'',
+						"name" => "edit",			"type"	=> "submit"),
 					);
 					break;
 

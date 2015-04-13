@@ -71,11 +71,26 @@ class User extends Model{
 
 	/* Get profile informations by user id */
 	function getUserInfo($idUser){
-		$info = $this->db->prepare("SELECT avatar, DATE_FORMAT(since, '%d/%m/%Y') AS since FROM $this->table2 WHERE idUser = $idUser");
+		$info = $this->db->prepare("SELECT idUser, avatar, email, DATE_FORMAT(since, '%d/%m/%Y') AS since FROM $this->table2 WHERE idUser = $idUser");
 		$info->execute(array());
 		$results = $info->fetch(PDO::FETCH_ASSOC);
 
 		return $results;
+	}
+
+	/* Edit a field of a user's profile */
+	function editProfile($idUser, $field, $newValue){
+		$editing = $this->db->prepare("UPDATE $this->table2 SET $field = :newValue WHERE idUser = :idUser");
+		$editing->execute(array('newValue'=>$newValue, 'idUser'=>$idUser));
+	}
+
+	/* Get a user's password */
+	function getPassword($idUser){
+		$pwd = $this->db->prepare("SELECT pwd FROM $this->table WHERE idUser = :idUser");
+		$login->execute(array('idUser'=>$idUser));
+		$result = $login->fetch(PDO::FETCH_NUM);
+
+		return $result[0];
 	}
 
 }

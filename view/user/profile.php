@@ -2,16 +2,29 @@
     <h2 class="title1"><i class="fa fa-child"></i> <?php echo($profile['username']); ?></h2>
     <article>
       
+      
+
       <div class="profile">
         <div class="avatar">
           <img src="<?php echo ($profile['avatar']); ?>" alt="Avatar de <?php echo($user->username); ?>" />
         </div>
+
         <div>
+
+          <div class="right">
+            <?php if(isset($_SESSION['idUser']) && isset($_SESSION['username'])){
+                if($_SESSION['idUser'] == $profile['idUser']){ ?>
+            <a class="btn" href="/croqueunmort/user-edit"><i class="fa fa-edit"></i> Modifier</a>
+              <?php } } ?>
+          </div>
+
           <i class="fa fa-child fa-5x"></i>
           <h3 class="title2"><?php echo($profile['username']); ?></h3>
           <p>Inscrit depuis le <?php echo($profile['since']); ?></p>
         </div>
       </div>
+
+      <hr />
 
       <div class="rows">        
         <div class="row-3">

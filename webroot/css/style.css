@@ -191,7 +191,7 @@ td {
 
 
 /* Forms */
-input[type="text"], input[type="password"], input[type="email"] {
+input[type="text"], input[type="password"], input[type="email"], input[type="file"] {
 	background: #E9E7E7;
 	border: 3px #E9E7E7 solid;
 	color: #1D0F06;
@@ -203,7 +203,8 @@ input[type="text"], input[type="password"], input[type="email"] {
 }
 input[type="text"]:hover, input[type="text"]:focus, 
 input[type="password"]:hover, input[type="password"]:focus, 
-input[type="email"]:hover, input[type="email"]:focus {
+input[type="email"]:hover, input[type="email"]:focus,
+input[type="file"]:hover, input[type="file"]:focus {
 	border: 3px #80B19B solid;
 }
 input[type="submit"], input[type="button"] {
@@ -265,10 +266,13 @@ input[type="submit"]:hover {
 }
 .profile div {
 	display: table-cell;
+	position: relative;
 	vertical-align: middle;
 }
 .right {
-	float: right;
+	position: absolute !important;
+		top: 0;
+		right: 0;
 	margin: 0.5%;
 	text-align: right;
 }
