@@ -45,7 +45,8 @@
 
 		function random(){
 			$this->loadModel('Corpse');
-			$randId = $this->Corpse->getRandCorpseId(true);		$this->id($randId['idCorpse']);
+			$randId = $this->Corpse->getRandCorpseId(true);	
+			$this->id($randId['idCorpse']);
 		}
 
 		/* sets an array of corpse */

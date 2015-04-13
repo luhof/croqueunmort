@@ -81,6 +81,12 @@
           else echo "anonyme - ";
               
       }
+
+
+        echo "<p>".$corpse['likesCount']." Likes <a href='".SERVER.'/corpse-addLike-'.$corpse['idCorpse']."'>Like !</p>";
+
+      
+
       echo "</article>";
 
       
