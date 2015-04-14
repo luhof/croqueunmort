@@ -35,10 +35,25 @@
 
 			$corpse_by = $this->separateAuthors($corpse['corpse_by']);
 
+
+			//hasuserliked
+			if(isset($_SESSION['idUser']) && !empty($_SESSION['idUser'])){
+				$idUser = $_SESSION['idUser'];
+				$hasLiked = $this->Corpse->hasUserLikedPost($idUser, $idCorpse);
+			}
+			else $hasLiked = 0;
+				
+
+			
+
+
 			$this->set('idCorpse',	$corpse['idCorpse']);
 			$this->set('img',		"./images/corpses/".$corpse['img']);
 			$this->set('corpse_by', $corpse_by);
 			$this->set('likesCount',$corpse['likesCount']);
+			$this->set('hasLiked', $hasLiked);
+
+
 
 
 		}
@@ -58,6 +73,15 @@
 
 			foreach($corpseArray as &$corpse){
 				$corpse['corpse_by'] = $this->separateAuthors($corpse['corpse_by']);
+				
+			if(isset($_SESSION['idUser']) && !empty($_SESSION['idUser'])){
+				$idUser = $_SESSION['idUser'];
+				$hasLiked = $this->Corpse->hasUserLikedPost($idUser, $corpse['idCorpse']);
+			}
+			else $hasLiked = 0;
+
+				$corpse['hasLiked'] = $hasLiked;
+
 			}
 
 
@@ -74,7 +98,21 @@
 
 			foreach($corpseArray as &$corpse){
 				$corpse['corpse_by'] = $this->separateAuthors($corpse['corpse_by']);
+			
+				if(isset($_SESSION['idUser']) && !empty($_SESSION['idUser'])){
+				$idUser = $_SESSION['idUser'];
+				$hasLiked = $this->Corpse->hasUserLikedPost($idUser, $corpse['idCorpse']);
+				}
+				else $hasLiked = 0;
+
+					$corpse['hasLiked'] = $hasLiked;
+
 			}
+
+			
+
+
+
 
 			$this->set('corpseArray', $corpseArray);
 

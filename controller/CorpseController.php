@@ -282,11 +282,14 @@
 			$hasLiked = $this->Corpse->hasUserLikedPost($idUser, $idCorpse);
 			
 			if(!$hasLiked){
+				//echo "add like ".$idUser." - ".$idCorpse;
 				$this->Corpse->addLike($idUser, $idCorpse);
 				header('location: '.SERVER.DS.'view-id-'.$idCorpse);
 			}
 
 			else{
+				//echo "rm like ".$idUser." - ".$idCorpse;
+				$this->Corpse->rmLike($idUser, $idCorpse);
 				header('location: '.SERVER.DS.'view-id-'.$idCorpse);
 				//echo "he has liked yet ";
 			}

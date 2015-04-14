@@ -260,6 +260,38 @@ class Corpse extends Model{
 	}
 
 
+	function rmLike($idUser, $idCorpse){
+
+
+
+		try{
+			$this->db->beginTransaction();
+
+			$like = $this->db->prepare("DELETE FROM ce_likes WHERE idUser = $idUser AND idCorpse = $idCorpse
+				");
+
+			$likesCount = $this->db->prepare("	UPDATE ce_corpse
+												SET likesCount=likesCount-1
+												WHERE idCorpse=$idCorpse;"
+											);
+
+			
+			$like->execute();
+			$likesCount->execute();
+
+			$this->db->commit();
+		}
+
+		catch(Exception $e){
+			$db->rollback();
+			echo "erreur : ".$e->getMessage()."<br/>";
+			exit();
+		}
+
+		return true;
+	}
+
+
 }
 
 

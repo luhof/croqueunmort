@@ -25,8 +25,12 @@
 		</p>
 
 		<?php
-
-				echo "<p>".$likesCount." Likes <a href='".SERVER.'/corpse-addLike-'.$idCorpse."'>Like !</p>";
+				if($hasLiked)
+					$hasLiked = "Unlike";
+				else{
+					$hasLiked = "Like";
+				}
+				echo "<p>".$likesCount." Likes <a href='".SERVER.'/corpse-addLike-'.$idCorpse."'>".$hasLiked."</p>";
 
 			?>
 		
