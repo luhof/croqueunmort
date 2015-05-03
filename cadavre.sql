@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  localhost:8889
--- Généré le :  Dim 12 Avril 2015 à 20:13
+-- Généré le :  Dim 03 Mai 2015 à 12:59
 -- Version du serveur :  5.5.38
 -- Version de PHP :  5.6.2
 
@@ -75,15 +75,15 @@ CREATE TABLE `ce_corpse` (
   `idPlace` int(11) DEFAULT NULL,
   `likesCount` int(11) NOT NULL,
   `corpse_by` text
-) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `ce_corpse`
 --
 
 INSERT INTO `ce_corpse` (`idCorpse`, `finished`, `img`, `idPlace`, `likesCount`, `corpse_by`) VALUES
-(77, 1, 'corpse_77.png', 3, 0, ',luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,'),
-(78, 1, 'corpse_78.png', 5, 0, ',luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,'),
+(77, 1, 'corpse_77.png', 3, 2, ',luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,'),
+(78, 1, 'corpse_78.png', 5, 1, ',luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,'),
 (79, 1, 'corpse_79.png', 5, 0, ',biri,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,'),
 (80, 1, 'corpse_80.png', 4, 0, ',luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,'),
 (81, 1, 'corpse_81.png', 3, 0, ',luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,'),
@@ -97,7 +97,9 @@ INSERT INTO `ce_corpse` (`idCorpse`, `finished`, `img`, `idPlace`, `likesCount`,
 (89, 1, 'corpse_89.png', 4, 0, ',username,username,username,username,username,username,username,username,username,username,'),
 (90, 1, 'corpse_90.png', 6, 0, ',username,luhof2,yohan,yohan,yohan,yohan,yohan,yohan,yohan,yohan,yohan,'),
 (91, 1, 'corpse_91.png', 3, 0, ',yohan,yohan,yohan,yohan,yohan,yohan,anonyme,anonyme,anonyme,anonyme,anonyme,'),
-(92, 1, 'corpse_92.png', 4, 0, ',romain,romain,romain,romain,romain,romain,romain,romain,romain,romain,');
+(92, 1, 'corpse_92.png', 4, 3, ',romain,romain,romain,romain,romain,romain,romain,romain,romain,romain,'),
+(93, 1, 'corpse_93.png', 5, 2, ',yohan,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,vieuxmec,'),
+(94, 1, 'corpse_94.png', 4, 1, ',luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,luhof2,');
 
 -- --------------------------------------------------------
 
@@ -109,6 +111,21 @@ CREATE TABLE `ce_likes` (
   `idUser` int(11) NOT NULL,
   `idCorpse` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `ce_likes`
+--
+
+INSERT INTO `ce_likes` (`idUser`, `idCorpse`) VALUES
+(19, 92),
+(30, 77),
+(30, 92),
+(30, 78),
+(32, 92),
+(32, 77),
+(34, 93),
+(19, 93),
+(19, 94);
 
 -- --------------------------------------------------------
 
@@ -148,7 +165,7 @@ CREATE TABLE `ce_panel` (
   `idCharacter` int(11) DEFAULT NULL,
   `idAction` int(11) DEFAULT NULL,
   `idObject` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=224 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `ce_panel`
@@ -202,7 +219,13 @@ INSERT INTO `ce_panel` (`idCase`, `step`, `finished`, `idCorpse`, `idCharacter`,
 (220, '3', 1, 91, 1, 2, 2),
 (221, '1', 1, 92, 1, 1, 1),
 (222, '2', 1, 92, 2, 2, 4),
-(223, '3', 1, 92, 3, 2, 2);
+(223, '3', 1, 92, 3, 2, 2),
+(224, '1', 1, 93, 2, 2, 3),
+(225, '2', 1, 93, 3, 2, 3),
+(226, '3', 1, 93, 3, 3, 4),
+(227, '1', 1, 94, 4, 3, 3),
+(228, '2', 1, 94, 2, 4, 1),
+(229, '3', 1, 94, 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -236,7 +259,7 @@ INSERT INTO `ce_place` (`idPlace`, `name`, `url`, `url_thumb`) VALUES
 CREATE TABLE `ce_user` (
 `idUser` int(11) NOT NULL,
   `username` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `ce_user`
@@ -259,7 +282,8 @@ INSERT INTO `ce_user` (`idUser`, `username`) VALUES
 (30, 'yohan'),
 (31, 'maelle'),
 (32, 'username'),
-(33, 'romain');
+(33, 'romain'),
+(34, 'vieuxmec');
 
 -- --------------------------------------------------------
 
@@ -273,7 +297,7 @@ CREATE TABLE `ce_userinfo` (
   `pwd` varchar(100) NOT NULL,
   `since` date NOT NULL,
   `avatar` varchar(50) NOT NULL DEFAULT 'niutniut.jpg'
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 --
 -- Contenu de la table `ce_userinfo`
@@ -282,7 +306,7 @@ CREATE TABLE `ce_userinfo` (
 INSERT INTO `ce_userinfo` (`idUser`, `email`, `pwd`, `since`, `avatar`) VALUES
 (17, 'qsdf@mail.fr', '2e77d94ee355b4123bc10b3c417ea42f', '2015-03-26', 'niutniut.jpg'),
 (18, 'lucas.horand@gmail.com', 'f05a56018fa1461f904020b044afc702', '2015-03-26', 'niutniut.jpg'),
-(19, 'machin@mail.fr', 'd9bcb7975099d9b197e328e80412f4a6', '2015-03-29', 'niutniut.jpg'),
+(19, 'luhof@mail.fr', '153ed81c8db7e66b41f8817d6ee7b347', '2015-03-29', 'avatar-19'),
 (20, 'mectest@test.fr', 'd9bcb7975099d9b197e328e80412f4a6', '2015-03-29', 'niutniut.jpg'),
 (21, 'mail@mail.fr', 'b02d0c53bfa38ab4a0d7b57f1d15b381', '2015-03-31', 'niutniut.jpg'),
 (22, 'lucas.horand@lol.fr', 'b29aff6c0434a850d7e4477d5b5036f8', '2015-04-06', 'niutniut.jpg'),
@@ -296,7 +320,8 @@ INSERT INTO `ce_userinfo` (`idUser`, `email`, `pwd`, `since`, `avatar`) VALUES
 (30, 'yohan@yohan.fr', '57c46bae2b277a9e75f959e3c373553b', '2015-04-07', 'niutniut.jpg'),
 (31, 'maelle@maelle.maelle', 'd9bcb7975099d9b197e328e80412f4a6', '2015-04-07', 'niutniut.jpg'),
 (32, 'mail@google.com', 'f49588a0a61612e9158ad165c94056f3', '2015-04-07', 'niutniut.jpg'),
-(33, 'romain@romain.fr', 'bf5416e974a9697f8e60a28cdfdacd5b', '2015-04-07', 'niutniut.jpg');
+(33, 'romain@romain.fr', 'bf5416e974a9697f8e60a28cdfdacd5b', '2015-04-07', 'niutniut.jpg'),
+(34, 'mec@mec.fr', 'a8c4a95a8e5e0eddd7db10152d87b62a', '2015-04-14', 'niutniut.jpg');
 
 --
 -- Index pour les tables exportées
@@ -374,7 +399,7 @@ MODIFY `idCharacter` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT pour la table `ce_corpse`
 --
 ALTER TABLE `ce_corpse`
-MODIFY `idCorpse` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=93;
+MODIFY `idCorpse` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=95;
 --
 -- AUTO_INCREMENT pour la table `ce_object`
 --
@@ -384,7 +409,7 @@ MODIFY `idObject` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT pour la table `ce_panel`
 --
 ALTER TABLE `ce_panel`
-MODIFY `idCase` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=224;
+MODIFY `idCase` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=230;
 --
 -- AUTO_INCREMENT pour la table `ce_place`
 --
@@ -394,12 +419,12 @@ MODIFY `idPlace` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT pour la table `ce_user`
 --
 ALTER TABLE `ce_user`
-MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT pour la table `ce_userinfo`
 --
 ALTER TABLE `ce_userinfo`
-MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
+MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=35;
 --
 -- Contraintes pour les tables exportées
 --
@@ -409,7 +434,7 @@ MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=34;
 --
 ALTER TABLE `ce_likes`
 ADD CONSTRAINT `ce_likes_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `ce_user` (`idUser`) ON DELETE CASCADE ON UPDATE CASCADE,
-ADD CONSTRAINT `ce_likes_ibfk_2` FOREIGN KEY (`idCorpse`) REFERENCES `ce_corpse` (`idCorpse`);
+ADD CONSTRAINT `ce_likes_ibfk_2` FOREIGN KEY (`idCorpse`) REFERENCES `ce_corpse` (`idCorpse`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `ce_panel`
