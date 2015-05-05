@@ -10,9 +10,8 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
 DROP DATABASE IF EXISTS newdb;
-CREATE DATABASE newdb CHARACTER SET 'utf8';
+CREATE DATABASE IF NOT EXISTS newdb CHARACTER SET 'utf8';
 USE newdb;
 
 -- --------------------------------------------------------
